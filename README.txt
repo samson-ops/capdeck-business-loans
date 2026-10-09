@@ -7,7 +7,7 @@ index.html and the assets folder to any web host.
 Files
 - index.html              the page (HTML, styles and script in one file)
 - assets/capdeck-logo.png your logo, empty margins trimmed
-- assets/cafe-owners.jpg  photo in the "Put it to work" section
+- assets/cafe-owners.jpg  photo in the hero at the top of the page
 
 Before going live
 - Replace every item in [SQUARE BRACKETS] with your real figures and text.
