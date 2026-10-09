@@ -58,16 +58,15 @@ html{scroll-behavior:smooth}
 </div>
 </header>
 
-<section id="top">
-<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 32px)">
-<div style="background: var(--accent); color: #FFFFFF; border-radius: 20px; overflow: hidden; display: flex; flex-wrap: wrap">
-<div style="flex: 1 1 480px; min-width: 0; box-sizing: border-box; padding: clamp(28px, 4vw, 56px); display: flex; flex-direction: column; justify-content: center; gap: 20px">
-<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -0.02em">Capital that keeps pace with your business.</h1>
-<p style="margin: 0; font-size: 18px; max-width: 480px">Term loans and lines of credit for established small businesses. Apply online and talk to a real advisor whenever you want one.</p>
-<div id="apply" role="group" aria-label="Start your application" style="margin-top: 8px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px">
-<div style="flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="purpose" style="font-size: 14px; font-weight: 600">What is the funding for?</label>
-<select id="purpose" name="purpose" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 0; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
+<section id="top" style="background: #EEF4FF">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(32px, 4vw, 56px) clamp(16px, 3vw, 32px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(32px, 5vw, 72px)">
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(36px, 3.8vw, 54px); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance">Capital that keeps pace with your business.</h1>
+<p style="margin: 0; font-size: 19px; color: #4A5261; max-width: 500px">Term loans and lines of credit for established small businesses. Apply online and talk to a real advisor whenever you want one.</p>
+<div id="apply" role="group" aria-label="Start your application" style="margin-top: 8px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; box-shadow: 0 18px 36px -26px rgba(10, 11, 13, 0.35); padding: 20px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px">
+<div style="flex: 1 1 165px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="purpose" style="font-size: 14px; font-weight: 600">Funding purpose</label>
+<select id="purpose" name="purpose" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 1px solid #8A93A3; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
 <option value="">Select a purpose</option>
 <option value="working-capital">Working capital</option>
 <option value="equipment">Equipment</option>
@@ -77,9 +76,9 @@ html{scroll-behavior:smooth}
 <option value="other">Something else</option>
 </select>
 </div>
-<div style="flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="amount" style="font-size: 14px; font-weight: 600">How much do you need?</label>
-<select id="amount" name="amount" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 0; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
+<div style="flex: 1 1 165px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="amount" style="font-size: 14px; font-weight: 600">Amount needed</label>
+<select id="amount" name="amount" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 1px solid #8A93A3; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
 <option value="">Select an amount</option>
 <option value="under-25k">Under $25,000</option>
 <option value="25k-100k">$25,000 to $100,000</option>
@@ -87,12 +86,11 @@ html{scroll-behavior:smooth}
 <option value="over-250k">Over $250,000</option>
 </select>
 </div>
-<a class="btn" href="#apply" style="flex: 1 1 100%; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; border-radius: 10px; background: #0A0B0D; color: #FFFFFF; font-weight: 600; font-size: 17px; text-decoration: none">See my options<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn" href="#apply" style="flex: 1 1 165px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 16px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 17px; white-space: nowrap; text-decoration: none">See my options<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
-<div style="font-size: 14px">Takes about [X] minutes. No obligation.</div>
+<div style="font-size: 14px; color: #4A5261">Takes about [X] minutes. No obligation.</div>
 </div>
-<div style="flex: 1 1 420px; min-width: 0; min-height: clamp(240px, 30vw, 420px); position: relative; background: #0A0B0D"><img src="assets/cafe-owners.jpg" alt="Two cafe owners smiling behind the counter of their coffee shop" width="982" height="652" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center"></div>
-</div>
+<div style="flex: 1 1 420px; min-width: 0"><img src="assets/cafe-owners.jpg" alt="Two cafe owners smiling behind the counter of their coffee shop" width="982" height="652" style="display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover; object-position: center; border-radius: 16px"></div>
 </div>
 </section>
 
