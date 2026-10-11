@@ -34,6 +34,9 @@ select:focus-visible{outline:3px solid #0A0B0D;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.faq-plus,.btn,.btn svg,.lift{transition:none}.btn:hover,.btn:hover svg,.lift:hover{transform:none}.mq-track{animation:none;width:auto}.mq-set{flex-wrap:wrap;padding:0 16px}.mq-dup{display:none}}
 :root{--accent:#0066FF}
 html{scroll-behavior:smooth}
+.chip{flex:1 1 140px;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border-radius:10px;font-size:15px;font-weight:500;text-align:left;background:#FFFFFF;color:#0A0B0D;border:1.5px solid #8A93A3;transition:background .15s ease,color .15s ease,border-color .15s ease}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#FFFFFF;border-color:var(--accent)}
 .js .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
 .js .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}}
@@ -59,85 +62,108 @@ html{scroll-behavior:smooth}
 </header>
 
 <section id="top" style="background: #EEF4FF">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(32px, 4vw, 56px) clamp(16px, 3vw, 32px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(32px, 5vw, 72px)">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(28px, 3.4vw, 48px) clamp(16px, 3vw, 32px) clamp(88px, 8vw, 104px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(32px, 5vw, 72px)">
 <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 <h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(36px, 3.8vw, 54px); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance">Capital that keeps pace with your business.</h1>
-<p style="margin: 0; font-size: 19px; color: #4A5261; max-width: 500px">Term loans and lines of credit for established small businesses. Apply online and talk to a real advisor whenever you want one.</p>
-<div id="apply" role="group" aria-label="Start your application" style="margin-top: 8px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; box-shadow: 0 18px 36px -26px rgba(10, 11, 13, 0.35); padding: 20px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px">
-<div style="flex: 1 1 165px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="purpose" style="font-size: 14px; font-weight: 600">Funding purpose</label>
-<select id="purpose" name="purpose" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 1px solid #8A93A3; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
-<option value="">Select a purpose</option>
-<option value="working-capital">Working capital</option>
-<option value="equipment">Equipment</option>
-<option value="inventory">Inventory</option>
-<option value="expansion">Expansion</option>
-<option value="payroll">Payroll</option>
-<option value="other">Something else</option>
-</select>
+<p style="margin: 0; font-size: 19px; color: #4A5261; max-width: 560px">Term loans and lines of credit for established small businesses, with a real advisor whenever you want one.</p>
+<div id="apply" role="group" aria-label="Start your application" style="margin-top: 8px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; box-shadow: 0 18px 36px -26px rgba(10, 11, 13, 0.35); padding: clamp(18px, 2vw, 24px); display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px">
+<label for="amount" style="font-size: 15px; font-weight: 600">How much do you need?</label>
+<div id="amount-out" style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 32px; line-height: 1; letter-spacing: -0.02em; color: var(--accent)">$75,000</div>
 </div>
-<div style="flex: 1 1 165px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="amount" style="font-size: 14px; font-weight: 600">Amount needed</label>
-<select id="amount" name="amount" style="width: 100%; height: 52px; box-sizing: border-box; padding: 0 12px; border: 1px solid #8A93A3; border-radius: 10px; background: #FFFFFF; color: #0A0B0D; font-family: inherit; font-size: 16px">
-<option value="">Select an amount</option>
-<option value="under-25k">Under $25,000</option>
-<option value="25k-100k">$25,000 to $100,000</option>
-<option value="100k-250k">$100,000 to $250,000</option>
-<option value="over-250k">Over $250,000</option>
-</select>
+<input id="amount" name="amount" type="range" min="5000" max="2000000" step="5000" value="75000" aria-valuetext="$75,000" style="width: 100%; height: 36px; margin: 0; accent-color: var(--accent); cursor: pointer">
+<div aria-hidden="true" style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5261"><span>$5K</span><span>$2M</span></div>
 </div>
-<a class="btn" href="#apply" style="flex: 1 1 165px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 16px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 17px; white-space: nowrap; text-decoration: none">See my options<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div id="purpose-label" style="font-size: 15px; font-weight: 600">What will you use it for?</div>
+<div role="group" aria-labelledby="purpose-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" class="chip" data-purpose="working" aria-pressed="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3M3 7.5V17a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H5.5A2.5 2.5 0 0 1 3 7.5ZM16 13.5h.5"></path></svg>Working capital</button>
+<button type="button" class="chip" data-purpose="equipment" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>Equipment</button>
+<button type="button" class="chip" data-purpose="inventory" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8ZM3 8l9 5 9-5M12 13v8"></path></svg>Inventory</button>
+<button type="button" class="chip" data-purpose="expansion" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"></path></svg>Expansion</button>
+<button type="button" class="chip" data-purpose="payroll" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Payroll</button>
+<button type="button" class="chip" data-purpose="other" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M5 12h.01M12 12h.01M19 12h.01"></path></svg>Something else</button>
 </div>
-<div style="font-size: 14px; color: #4A5261">Takes about [X] minutes. No obligation.</div>
 </div>
-<div style="flex: 1 1 420px; min-width: 0"><img src="assets/cafe-owners.jpg" alt="Two cafe owners smiling behind the counter of their coffee shop" width="982" height="652" style="display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover; object-position: center; border-radius: 16px"></div>
+<a class="btn" href="#apply" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; padding: 0 16px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 18px; text-decoration: none"><span id="cta-label">See options for $75,000</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="font-size: 14px; color: #4A5261">Takes about 2 minutes. No obligation.</div>
+</div>
+<div style="flex: 1 1 420px; min-width: 0"><img src="assets/cafe-owners.jpg" alt="Two cafe owners smiling behind the counter of their coffee shop" width="982" height="652" style="display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; object-position: center; border-radius: 16px"></div>
 </div>
 </section>
 
 <section aria-label="CapDeck in numbers">
-<div class="reveal" style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px) 0; display: flex; flex-wrap: wrap; gap: 24px 32px">
-<div style="flex: 1 1 240px; min-width: 0; border-top: 2px solid #0A0B0D; padding-top: 20px">
-<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; letter-spacing: -0.04em; color: var(--accent)">[NUMBER]</div>
-<div style="margin-top: 10px; font-weight: 500">businesses funded</div>
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 32px)">
+<div style="position: relative; margin-top: -56px; background: #D5DEEC; border: 1px solid #D5DEEC; border-radius: 16px; overflow: hidden; box-shadow: 0 18px 36px -26px rgba(10, 11, 13, 0.35); display: flex; flex-wrap: wrap; gap: 1px">
+<div style="flex: 1 1 260px; min-width: 0; box-sizing: border-box; background: #FFFFFF; padding: clamp(20px, 2.4vw, 28px); display: flex; align-items: center; gap: 16px">
+<div aria-hidden="true" style="flex: none; width: 52px; height: 52px; border-radius: 50%; background: #EEF4FF; color: var(--accent); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5M4 9v11h16V9M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M9 20v-6h6v6"></path></svg></div>
+<div style="min-width: 0">
+<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(30px, 2.8vw, 38px); line-height: 1.05; letter-spacing: -0.02em" data-count="7250">7,250</div>
+<div style="margin-top: 2px; font-size: 15px; color: #4A5261">businesses funded</div>
 </div>
-<div style="flex: 1 1 240px; min-width: 0; border-top: 2px solid #0A0B0D; padding-top: 20px">
-<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; letter-spacing: -0.04em; color: var(--accent)">[$ TOTAL]</div>
-<div style="margin-top: 10px; font-weight: 500">delivered to small businesses</div>
 </div>
-<div style="flex: 1 1 240px; min-width: 0; border-top: 2px solid #0A0B0D; padding-top: 20px">
-<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; letter-spacing: -0.04em; color: var(--accent)">[RATING]</div>
-<div style="margin-top: 10px; font-weight: 500">average rating on [REVIEW SITE]</div>
+<div style="flex: 1 1 260px; min-width: 0; box-sizing: border-box; background: #FFFFFF; padding: clamp(20px, 2.4vw, 28px); display: flex; align-items: center; gap: 16px">
+<div aria-hidden="true" style="flex: none; width: 52px; height: 52px; border-radius: 50%; background: #EEF4FF; color: var(--accent); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+<div style="min-width: 0">
+<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(30px, 2.8vw, 38px); line-height: 1.05; letter-spacing: -0.02em" data-count="800" data-prefix="$" data-suffix="M+">$800M+</div>
+<div style="margin-top: 2px; font-size: 15px; color: #4A5261">delivered to small businesses</div>
+</div>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; box-sizing: border-box; background: #FFFFFF; padding: clamp(20px, 2.4vw, 28px); display: flex; align-items: center; gap: 16px">
+<div aria-hidden="true" style="flex: none; width: 52px; height: 52px; border-radius: 50%; background: #EEF4FF; color: var(--accent); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div>
+<div style="min-width: 0">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px">
+<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(30px, 2.8vw, 38px); line-height: 1.05; letter-spacing: -0.02em" data-count="4.9" data-decimals="1">4.9</div>
+<svg role="img" aria-label="out of 5 stars" width="104" height="20" viewBox="0 0 124 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path><path d="M37 2l3.09 6.26L47 9.27l-5 4.87 1.18 6.88L37 17.77l-6.18 3.25L32 14.14 27 9.27l6.91-1.01L37 2z"></path><path d="M62 2l3.09 6.26L72 9.27l-5 4.87 1.18 6.88L62 17.77l-6.18 3.25L57 14.14 52 9.27l6.91-1.01L62 2z"></path><path d="M87 2l3.09 6.26L97 9.27l-5 4.87 1.18 6.88L87 17.77l-6.18 3.25L82 14.14 77 9.27l6.91-1.01L87 2z"></path><path d="M112 2l3.09 6.26L122 9.27l-5 4.87 1.18 6.88L112 17.77l-6.18 3.25L107 14.14 102 9.27l6.91-1.01L112 2z"></path></svg>
+</div>
+<div style="margin-top: 2px; font-size: 15px; color: #4A5261">average rating on Google</div>
+</div>
+</div>
 </div>
 </div>
 </section>
 
-<section id="loans">
-<div class="reveal" style="max-width: 1240px; margin: 0 auto; padding: clamp(64px, 9vw, 128px) clamp(16px, 3vw, 32px) 0; display: flex; flex-direction: column; gap: 40px">
-<div style="display: flex; flex-direction: column; gap: 14px; max-width: 760px">
-<div style="font-size: 14px; font-weight: 600; color: var(--accent)">Products</div>
-<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(36px, 4.6vw, 68px); line-height: 1; letter-spacing: -0.035em">Two ways to fund what comes next.</h2>
+<section id="loans" style="margin-top: clamp(40px, 5vw, 72px); background: #F4F6FA">
+<div class="reveal" style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) clamp(16px, 3vw, 32px) clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 8px">
+<div style="margin: 0 auto clamp(16px, 2vw, 28px); max-width: 640px; text-align: center; display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.02em; line-height: 1.1">Choose the funding that fits</h2>
+<p style="margin: 0; color: #4A5261">Two products, both available from $5,000 to $2 million.</p>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 20px">
-<article class="lift" style="flex: 1 1 360px; min-width: 0; box-sizing: border-box; background: #0A0B0D; color: #FFFFFF; border-radius: 32px; padding: clamp(24px, 3.4vw, 48px); display: flex; flex-direction: column; gap: 22px">
-<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(36px, 3.6vw, 52px); letter-spacing: -0.035em; line-height: 1">Term loan</h3>
-<p style="margin: 0; color: #B4BCC9; max-width: 420px">A lump sum up front with fixed payments, for a purchase you can plan around.</p>
-<dl style="margin: 12px 0 0; display: flex; flex-direction: column">
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #2A2E36"><dt style="color: #B4BCC9">Amount</dt><dd style="margin: 0; text-align: right; font-weight: 600">[$ MIN] to [$ MAX]</dd></div>
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #2A2E36"><dt style="color: #B4BCC9">Term</dt><dd style="margin: 0; text-align: right; font-weight: 600">Up to [X] months</dd></div>
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #2A2E36"><dt style="color: #B4BCC9">Suits</dt><dd style="margin: 0; text-align: right; font-weight: 600">Equipment, build-outs, bulk inventory</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<article style="flex: 1 1 360px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 14px; padding: clamp(20px, 2.2vw, 28px); display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<div aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--accent); color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM7 12h.01M17 12h.01"></path></svg></div>
+<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(24px, 2vw, 28px); letter-spacing: -0.02em; line-height: 1.1">Term loan</h3>
+</div>
+<p style="margin: 0; font-size: 16px; color: #4A5261">A lump sum up front with fixed payments. Best for equipment, build-outs and bulk inventory.</p>
+<div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #E3E7EE; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px">
+<dl style="margin: 0; display: flex; flex-wrap: wrap; gap: 12px 32px">
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Amount</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">$5K to $2M</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Term</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">Up to 36 months</dd></div>
 </dl>
-<a class="btn" href="#term-loans" style="margin-top: auto; align-self: flex-start; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #FFFFFF; color: #0A0B0D; font-weight: 600; text-decoration: none">Explore term loans<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn" href="#apply" aria-label="Apply for a term loan" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 16px; white-space: nowrap; text-decoration: none">Apply now<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
 </article>
-<article class="lift" style="flex: 1 1 360px; min-width: 0; box-sizing: border-box; background: var(--accent); color: #FFFFFF; border-radius: 32px; padding: clamp(24px, 3.4vw, 48px); display: flex; flex-direction: column; gap: 22px">
-<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(36px, 3.6vw, 52px); letter-spacing: -0.035em; line-height: 1">Line of credit</h3>
-<p style="margin: 0; max-width: 420px">Revolving funds you can draw on as needs come up, then draw again as you repay.</p>
-<dl style="margin: 12px 0 0; display: flex; flex-direction: column">
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255, 255, 255, 0.4)"><dt>Credit limit</dt><dd style="margin: 0; text-align: right; font-weight: 600">[$ MIN] to [$ MAX]</dd></div>
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255, 255, 255, 0.4)"><dt>Repayment</dt><dd style="margin: 0; text-align: right; font-weight: 600">[TERMS PER DRAW]</dd></div>
-<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255, 255, 255, 0.4)"><dt>Suits</dt><dd style="margin: 0; text-align: right; font-weight: 600">Cash-flow gaps, recurring costs</dd></div>
+<article style="flex: 1 1 360px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 14px; padding: clamp(20px, 2.2vw, 28px); display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<div aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--accent); color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M16 16h5v5"></path></svg></div>
+<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(24px, 2vw, 28px); letter-spacing: -0.02em; line-height: 1.1">Line of credit</h3>
+</div>
+<p style="margin: 0; font-size: 16px; color: #4A5261">Revolving funds you draw on as needs come up. Best for cash-flow gaps and recurring costs.</p>
+<div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #E3E7EE; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px">
+<dl style="margin: 0; display: flex; flex-wrap: wrap; gap: 12px 32px">
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Credit limit</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">$5K to $2M</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Minimum draw</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">$1,000</dd></div>
 </dl>
-<a class="btn" href="#lines-of-credit" style="margin-top: auto; align-self: flex-start; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #FFFFFF; color: #0A0B0D; font-weight: 600; text-decoration: none">Explore lines of credit<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn" href="#apply" aria-label="Apply for a line of credit" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 16px; white-space: nowrap; text-decoration: none">Apply now<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
 </article>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; font-size: 16px; color: #4A5261">
+<span>Not sure which one fits?</span>
+<a href="#callback" style="display: flex; align-items: center; min-height: 44px; font-weight: 600; color: #0A0B0D">Talk to an advisor</a>
 </div>
 </div>
 </section>
@@ -221,32 +247,32 @@ html{scroll-behavior:smooth}
 </div>
 </section>
 
-<section id="how">
-<div class="reveal" style="max-width: 1240px; margin: 0 auto; padding: clamp(64px, 9vw, 128px) clamp(16px, 3vw, 32px) 0">
-<div style="position: relative; overflow: hidden; background: #0A0B0D; color: #FFFFFF; border-radius: clamp(24px, 3vw, 40px); padding: clamp(28px, 5vw, 72px); display: flex; flex-direction: column; gap: 48px">
-<svg viewBox="0 0 200 200" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" aria-hidden="true" style="position: absolute; bottom: -150px; right: -150px; width: clamp(260px, 36vw, 540px); height: auto; opacity: 0.09"><path d="M150 20H60A40 40 0 0 0 20 60V150"></path><path d="M50 180H140A40 40 0 0 0 180 140V50"></path></svg>
-<div style="position: relative; display: flex; flex-direction: column; gap: 14px; max-width: 760px">
-<div style="font-size: 14px; font-weight: 600; color: #B4BCC9">How it works</div>
-<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(36px, 4.6vw, 68px); line-height: 1; letter-spacing: -0.035em">Three steps from application to funding.</h2>
+<section id="how" style="margin-top: clamp(56px, 7vw, 96px); background: #EEF4FF">
+<div class="reveal" style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 5vw, 72px) clamp(16px, 3vw, 32px); display: flex; flex-direction: column; gap: clamp(28px, 3.4vw, 44px)">
+<div style="margin: 0 auto; max-width: 760px; text-align: center; display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance">Three steps from application to funding</h2>
+<p style="margin: 0; color: #4A5261">It all happens online, with an advisor on hand whenever you want one.</p>
 </div>
-<ol style="position: relative; margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 32px">
-<li style="flex: 1 1 260px; min-width: 0; border-top: 1px solid #3A3F49; padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
-<div aria-hidden="true" style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(56px, 6vw, 88px); line-height: 1; letter-spacing: -0.04em; margin-bottom: 16px">01</div>
-<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em">Tell us about your business</h3>
-<p style="margin: 0; color: #B4BCC9">A short online form covering the basics and what you need the funding for.</p>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 28px 16px">
+<li style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 16px; margin-bottom: 6px"><div style="flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #FFFFFF; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; display: flex; align-items: center; justify-content: center">1</div><div style="flex: 1; height: 2px; background: #B9CDF2"></div></div>
+<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Apply online</h3>
+<p style="margin: 0; padding-right: 16px; font-size: 16px; color: #4A5261">Tell us about your business and what you need. It takes about 2 minutes.</p>
 </li>
-<li style="flex: 1 1 260px; min-width: 0; border-top: 1px solid #3A3F49; padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
-<div aria-hidden="true" style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(56px, 6vw, 88px); line-height: 1; letter-spacing: -0.04em; margin-bottom: 16px">02</div>
-<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em">Review your options</h3>
-<p style="margin: 0; color: #B4BCC9">See the amounts and terms on offer, with an advisor on hand to walk you through them.</p>
+<li style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 16px; margin-bottom: 6px"><div style="flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #FFFFFF; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; display: flex; align-items: center; justify-content: center">2</div><div style="flex: 1; height: 2px; background: #B9CDF2"></div></div>
+<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Review your options</h3>
+<p style="margin: 0; padding-right: 16px; font-size: 16px; color: #4A5261">See the amounts and terms you qualify for, and talk them through with an advisor if you like.</p>
 </li>
-<li style="flex: 1 1 260px; min-width: 0; border-top: 1px solid #3A3F49; padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
-<div aria-hidden="true" style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(56px, 6vw, 88px); line-height: 1; letter-spacing: -0.04em; margin-bottom: 16px">03</div>
-<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em">Get funded</h3>
-<p style="margin: 0; color: #B4BCC9">Sign electronically and receive your funds in [TIMEFRAME].</p>
+<li style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 16px; margin-bottom: 6px"><div style="flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #FFFFFF; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; display: flex; align-items: center; justify-content: center">3</div></div>
+<h3 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Get funded</h3>
+<p style="margin: 0; padding-right: 16px; font-size: 16px; color: #4A5261">Sign electronically and the funds are sent to your business bank account.</p>
 </li>
 </ol>
-<a class="btn" href="#apply" style="position: relative; align-self: flex-start; display: flex; align-items: center; gap: 8px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 18px; text-decoration: none">Start my application<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 20px">
+<a class="btn" href="#apply" style="display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 24px; border-radius: 10px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 17px; text-decoration: none">Start my application<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div style="font-size: 14px; color: #4A5261">Takes about 2 minutes. No obligation.</div>
 </div>
 </div>
 </section>
@@ -329,7 +355,7 @@ html{scroll-behavior:smooth}
 <svg viewBox="0 0 200 200" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" aria-hidden="true" style="position: absolute; bottom: -120px; right: -60px; width: clamp(300px, 38vw, 560px); height: auto; opacity: 0.13"><path d="M150 20H60A40 40 0 0 0 20 60V150"></path><path d="M50 180H140A40 40 0 0 0 180 140V50"></path></svg>
 <div style="position: relative; flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 500; font-size: clamp(48px, 7.4vw, 116px); line-height: 0.92; letter-spacing: -0.045em">Ready when <span style="color: #0A0B0D">you</span> are.</h2>
-<p style="margin: 0; font-size: 20px; max-width: 460px">See what your business could qualify for in about [X] minutes.</p>
+<p style="margin: 0; font-size: 20px; max-width: 460px">See what your business could qualify for in about 2 minutes.</p>
 </div>
 <a class="btn" href="#apply" style="position: relative; display: flex; align-items: center; gap: 8px; min-height: 64px; padding: 0 36px; border-radius: 999px; background: #FFFFFF; color: #0A0B0D; font-weight: 600; font-size: 20px; text-decoration: none">Check my options<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
@@ -377,6 +403,48 @@ html{scroll-behavior:smooth}
 </div>
 <script>
 (function () {
+  var slider = document.getElementById('amount');
+  var amountOut = document.getElementById('amount-out');
+  var ctaLabel = document.getElementById('cta-label');
+  function showAmount() {
+    var v = Number(slider.value);
+    var text = '$' + v.toLocaleString('en-US');
+    amountOut.textContent = text;
+    ctaLabel.textContent = 'See options for ' + text;
+    slider.setAttribute('aria-valuetext', text);
+  }
+  slider.addEventListener('input', showAmount);
+  showAmount();
+  var chips = document.querySelectorAll('.chip');
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+    });
+  });
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function formatCount(el, value) {
+    var d = Number(el.getAttribute('data-decimals') || 0);
+    return (el.getAttribute('data-prefix') || '') + value.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) + (el.getAttribute('data-suffix') || '');
+  }
+  if (!reduceMotion && 'IntersectionObserver' in window && window.requestAnimationFrame) {
+    var countIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target, to = Number(el.getAttribute('data-count')), start = null;
+        countIo.unobserve(el);
+        function step(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / 1100, 1);
+          el.textContent = formatCount(el, to * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { countIo.observe(el); });
+  }
+
   var blocks = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
