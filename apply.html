@@ -50,7 +50,7 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 <sc-if value="{{isForm}}" hint-placeholder-val="{{true}}">
 <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E3E7EE; display: flex; flex-direction: column; gap: 12px">
 <ol aria-label="Application steps" style="margin: 0; padding: 0; list-style: none; display: flex; align-items: flex-start">
-<sc-for list="{{steps}}" as="item" hint-placeholder-count="5">
+<sc-for list="{{steps}}" as="item" hint-placeholder-count="6">
 <li aria-current="{{item.current}}" style="flex: {{item.flex}}; min-width: 0; display: flex; flex-direction: column; gap: 8px">
 <div style="display: flex; align-items: center">
 <div style="flex: none; width: 32px; height: 32px; box-sizing: border-box; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: {{item.bg}}; color: {{item.fg}}; border: 1.5px solid {{item.bd}}">
@@ -63,7 +63,7 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 </li>
 </sc-for>
 </ol>
-<div class="show-sm" style="font-size: 14px; color: #4A5261">Step {{stepNum}} of 5: {{stepName}}</div>
+<div class="show-sm" style="font-size: 14px; color: #4A5261">Step {{stepNum}} of 6: {{stepName}}</div>
 </div>
 </sc-if>
 
@@ -100,6 +100,10 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 <input class="inp" id="bizName" name="bizName" type="text" autocomplete="organization" value="{{v.bizName}}" onChange="{{on.bizName}}" aria-invalid="{{bad.bizName}}">
 <sc-if value="{{err.bizName}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bizName}}</div></sc-if>
 </div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="dba" style="font-size: 14px; font-weight: 600">Doing business as <span style="font-weight: 400; color: #4A5261">(optional)</span></label>
+<input class="inp" id="dba" name="dba" type="text" value="{{v.dba}}" onChange="{{on.dba}}">
+</div>
 <div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
 <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
 <label for="industry" style="font-size: 14px; font-weight: 600">Industry</label>
@@ -130,19 +134,34 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
 <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="timeInBiz" style="font-size: 14px; font-weight: 600">Time in business</label>
-<select class="inp" id="timeInBiz" name="timeInBiz" value="{{v.timeInBiz}}" onChange="{{on.timeInBiz}}" aria-invalid="{{bad.timeInBiz}}">
-<option value="">Select</option>
-<option value="under6">Less than 6 months</option>
-<option value="6to12">6 to 12 months</option>
-<option value="1to2">1 to 2 years</option>
-<option value="2to5">2 to 5 years</option>
-<option value="over5">More than 5 years</option>
-</select>
-<sc-if value="{{err.timeInBiz}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.timeInBiz}}</div></sc-if>
+<label for="startDate" style="font-size: 14px; font-weight: 600">Business start date</label>
+<input class="inp" id="startDate" name="startDate" type="text" inputmode="numeric" placeholder="MM/YYYY" maxlength="7" value="{{v.startDate}}" onChange="{{on.startDate}}" aria-invalid="{{bad.startDate}}">
+<sc-if value="{{err.startDate}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.startDate}}</div></sc-if>
 </div>
 <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="zip" style="font-size: 14px; font-weight: 600">Business ZIP code</label>
+<label for="ein" style="font-size: 14px; font-weight: 600">Employer ID number (EIN)</label>
+<input class="inp" id="ein" name="ein" type="text" inputmode="numeric" autocomplete="off" placeholder="12-3456789" maxlength="10" value="{{v.ein}}" onChange="{{on.ein}}" aria-invalid="{{bad.ein}}">
+<sc-if value="{{err.ein}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.ein}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="bizStreet" style="font-size: 14px; font-weight: 600">Business street address</label>
+<input class="inp" id="bizStreet" name="bizStreet" type="text" autocomplete="address-line1" value="{{v.bizStreet}}" onChange="{{on.bizStreet}}" aria-invalid="{{bad.bizStreet}}">
+<sc-if value="{{err.bizStreet}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bizStreet}}</div></sc-if>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 2 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="bizCity" style="font-size: 14px; font-weight: 600">City</label>
+<input class="inp" id="bizCity" name="bizCity" type="text" autocomplete="address-level2" value="{{v.bizCity}}" onChange="{{on.bizCity}}" aria-invalid="{{bad.bizCity}}">
+<sc-if value="{{err.bizCity}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bizCity}}</div></sc-if>
+</div>
+<div style="flex: 1 1 90px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="bizState" style="font-size: 14px; font-weight: 600">State</label>
+<input class="inp" id="bizState" name="bizState" type="text" autocomplete="address-level1" placeholder="NY" maxlength="2" value="{{v.bizState}}" onChange="{{on.bizState}}" aria-invalid="{{bad.bizState}}">
+<sc-if value="{{err.bizState}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bizState}}</div></sc-if>
+</div>
+<div style="flex: 1 1 110px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="zip" style="font-size: 14px; font-weight: 600">ZIP code</label>
 <input class="inp" id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" value="{{v.zip}}" onChange="{{on.zip}}" aria-invalid="{{bad.zip}}">
 <sc-if value="{{err.zip}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.zip}}</div></sc-if>
 </div>
@@ -191,10 +210,96 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 </div>
 <sc-if value="{{err.hasLoans}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.hasLoans}}</div></sc-if>
 </div>
+<sc-if value="{{showLoanBalance}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="loanBalance" style="font-size: 14px; font-weight: 600">About how much do you still owe on them?</label>
+<select class="inp" id="loanBalance" name="loanBalance" value="{{v.loanBalance}}" onChange="{{on.loanBalance}}" aria-invalid="{{bad.loanBalance}}">
+<option value="">Select</option>
+<option value="under25">Under $25,000</option>
+<option value="25to100">$25,000 to $100,000</option>
+<option value="100to250">$100,000 to $250,000</option>
+<option value="over250">Over $250,000</option>
+</select>
+<sc-if value="{{err.loanBalance}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.loanBalance}}</div></sc-if>
+</div>
+</sc-if>
 </div>
 </sc-if>
 
 <sc-if value="{{is4}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">About the business owner</h1>
+<p style="margin: 0; color: #4A5261">Details for the owner who is applying. Lenders use them to confirm your identity.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="first" style="font-size: 14px; font-weight: 600">First name</label>
+<input class="inp" id="first" name="first" type="text" autocomplete="given-name" value="{{v.first}}" onChange="{{on.first}}" aria-invalid="{{bad.first}}">
+<sc-if value="{{err.first}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.first}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="last" style="font-size: 14px; font-weight: 600">Last name</label>
+<input class="inp" id="last" name="last" type="text" autocomplete="family-name" value="{{v.last}}" onChange="{{on.last}}" aria-invalid="{{bad.last}}">
+<sc-if value="{{err.last}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.last}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="ownership" style="font-size: 14px; font-weight: 600">Ownership (%)</label>
+<input class="inp" id="ownership" name="ownership" type="text" inputmode="numeric" maxlength="3" value="{{v.ownership}}" onChange="{{on.ownership}}" aria-invalid="{{bad.ownership}}">
+<sc-if value="{{err.ownership}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.ownership}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="dob" style="font-size: 14px; font-weight: 600">Date of birth</label>
+<input class="inp" id="dob" name="dob" type="text" inputmode="numeric" autocomplete="bday" placeholder="MM/DD/YYYY" maxlength="10" value="{{v.dob}}" onChange="{{on.dob}}" aria-invalid="{{bad.dob}}">
+<sc-if value="{{err.dob}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.dob}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ssn" style="font-size: 14px; font-weight: 600">Social Security number</label>
+<input class="inp" id="ssn" name="ssn" type="text" inputmode="numeric" autocomplete="off" placeholder="123-45-6789" maxlength="11" value="{{v.ssn}}" onChange="{{on.ssn}}" aria-invalid="{{bad.ssn}}">
+<div style="font-size: 14px; color: #4A5261">Used only to verify your identity and check credit. [ADD YOUR CREDIT-CHECK DISCLOSURE]</div>
+<sc-if value="{{err.ssn}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.ssn}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="homeStreet" style="font-size: 14px; font-weight: 600">Home street address</label>
+<input class="inp" id="homeStreet" name="homeStreet" type="text" autocomplete="address-line1" value="{{v.homeStreet}}" onChange="{{on.homeStreet}}" aria-invalid="{{bad.homeStreet}}">
+<sc-if value="{{err.homeStreet}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.homeStreet}}</div></sc-if>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 2 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="homeCity" style="font-size: 14px; font-weight: 600">City</label>
+<input class="inp" id="homeCity" name="homeCity" type="text" autocomplete="address-level2" value="{{v.homeCity}}" onChange="{{on.homeCity}}" aria-invalid="{{bad.homeCity}}">
+<sc-if value="{{err.homeCity}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.homeCity}}</div></sc-if>
+</div>
+<div style="flex: 1 1 90px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="homeState" style="font-size: 14px; font-weight: 600">State</label>
+<input class="inp" id="homeState" name="homeState" type="text" autocomplete="address-level1" placeholder="NY" maxlength="2" value="{{v.homeState}}" onChange="{{on.homeState}}" aria-invalid="{{bad.homeState}}">
+<sc-if value="{{err.homeState}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.homeState}}</div></sc-if>
+</div>
+<div style="flex: 1 1 110px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="homeZip" style="font-size: 14px; font-weight: 600">ZIP code</label>
+<input class="inp" id="homeZip" name="homeZip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" value="{{v.homeZip}}" onChange="{{on.homeZip}}" aria-invalid="{{bad.homeZip}}">
+<sc-if value="{{err.homeZip}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.homeZip}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="email" style="font-size: 14px; font-weight: 600">Email</label>
+<input class="inp" id="email" name="email" type="email" autocomplete="email" value="{{v.email}}" onChange="{{on.email}}" aria-invalid="{{bad.email}}">
+<sc-if value="{{err.email}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.email}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="phone" style="font-size: 14px; font-weight: 600">Mobile phone</label>
+<input class="inp" id="phone" name="phone" type="tel" autocomplete="tel" value="{{v.phone}}" onChange="{{on.phone}}" aria-invalid="{{bad.phone}}">
+<sc-if value="{{err.phone}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.phone}}</div></sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is5}}" hint-placeholder-val="{{false}}">
 <div style="display: flex; flex-direction: column; gap: 20px">
 <div style="display: flex; flex-direction: column; gap: 6px">
 <h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Share your bank information</h1>
@@ -227,45 +332,36 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 </div>
 </sc-if>
 
-<sc-if value="{{is5}}" hint-placeholder-val="{{false}}">
+<sc-if value="{{is6}}" hint-placeholder-val="{{false}}">
 <div style="display: flex; flex-direction: column; gap: 20px">
 <div style="display: flex; flex-direction: column; gap: 6px">
-<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Create your account</h1>
-<p style="margin: 0; color: #4A5261">You will sign in with these details to see your approvals.</p>
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Review and sign</h1>
+<p style="margin: 0; color: #4A5261">Check your details, create a password for your account, then sign.</p>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
-<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="first" style="font-size: 14px; font-weight: 600">First name</label>
-<input class="inp" id="first" name="first" type="text" autocomplete="given-name" value="{{v.first}}" onChange="{{on.first}}" aria-invalid="{{bad.first}}">
-<sc-if value="{{err.first}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.first}}</div></sc-if>
-</div>
-<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="last" style="font-size: 14px; font-weight: 600">Last name</label>
-<input class="inp" id="last" name="last" type="text" autocomplete="family-name" value="{{v.last}}" onChange="{{on.last}}" aria-invalid="{{bad.last}}">
-<sc-if value="{{err.last}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.last}}</div></sc-if>
-</div>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
-<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="email" style="font-size: 14px; font-weight: 600">Email</label>
-<input class="inp" id="email" name="email" type="email" autocomplete="email" value="{{v.email}}" onChange="{{on.email}}" aria-invalid="{{bad.email}}">
-<sc-if value="{{err.email}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.email}}</div></sc-if>
-</div>
-<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<label for="phone" style="font-size: 14px; font-weight: 600">Mobile phone</label>
-<input class="inp" id="phone" name="phone" type="tel" autocomplete="tel" value="{{v.phone}}" onChange="{{on.phone}}" aria-invalid="{{bad.phone}}">
-<sc-if value="{{err.phone}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.phone}}</div></sc-if>
-</div>
-</div>
+<dl style="margin: 0; background: #F4F6FA; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Business</dt><dd style="margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere">{{reviewBusiness}}</dd></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Owner</dt><dd style="margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere">{{reviewOwner}}</dd></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Request</dt><dd style="margin: 0; font-weight: 600; text-align: right">{{reviewRequest}}</dd></div>
+</dl>
 <div style="display: flex; flex-direction: column; gap: 6px">
 <label for="password" style="font-size: 14px; font-weight: 600">Create a password</label>
 <input class="inp" id="password" name="password" type="password" autocomplete="new-password" value="{{v.password}}" onChange="{{on.password}}" aria-invalid="{{bad.password}}">
-<div style="font-size: 14px; color: #4A5261">At least 8 characters.</div>
+<div style="font-size: 14px; color: #4A5261">At least 8 characters. You will sign in with your email and this password to see your approvals.</div>
 <sc-if value="{{err.password}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.password}}</div></sc-if>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px">
-<label style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px"><input id="consent" name="consent" type="checkbox" checked="{{v.consent}}" onChange="{{on.consent}}" style="flex: none; width: 22px; height: 22px; margin: 1px 0 0; accent-color: {{accent}}"><span>I agree to the <a href="#terms">Terms of Use</a> and <a href="#privacy">Privacy Policy</a>, and I authorize CapDeck to share my information with its lending partners to find funding options. [ADD YOUR CREDIT-CHECK AUTHORIZATION WORDING]</span></label>
+<label style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px"><input id="consent" name="consent" type="checkbox" checked="{{v.consent}}" onChange="{{on.consent}}" style="flex: none; width: 22px; height: 22px; margin: 1px 0 0; accent-color: {{accent}}"><span>I agree to the <a href="#terms">Terms of Use</a> and <a href="#privacy">Privacy Policy</a>, and I authorize CapDeck to share my information with its lending partners to find funding options.</span></label>
 <sc-if value="{{err.consent}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.consent}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px"><input id="consentCredit" name="consentCredit" type="checkbox" checked="{{v.consentCredit}}" onChange="{{on.consentCredit}}" style="flex: none; width: 22px; height: 22px; margin: 1px 0 0; accent-color: {{accent}}"><span>I authorize CapDeck and its lending partners to obtain business and personal credit reports to evaluate this application. [ADD YOUR CREDIT AUTHORIZATION WORDING]</span></label>
+<sc-if value="{{err.consentCredit}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.consentCredit}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding-top: 20px; border-top: 1px solid #E3E7EE">
+<label for="signature" style="font-size: 14px; font-weight: 600">Type your full legal name to sign</label>
+<input class="inp" id="signature" name="signature" type="text" autocomplete="off" value="{{v.signature}}" onChange="{{on.signature}}" aria-invalid="{{bad.signature}}" style="height: 56px; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-size: 20px; font-weight: 500">
+<div style="font-size: 14px; color: #4A5261">Signed electronically on {{today}}.</div>
+<sc-if value="{{err.signature}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.signature}}</div></sc-if>
 </div>
 </div>
 </sc-if>
@@ -318,6 +414,37 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 </ul>
 </aside>
 </main>
+
+<section aria-labelledby="reviews-title" style="background: #FFFFFF; border-top: 1px solid #D5DEEC">
+<div style="max-width: 1120px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) clamp(16px, 3vw, 32px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px">
+<h2 id="reviews-title" style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.02em; line-height: 1.1">What business owners say</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px">
+<span style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 28px; line-height: 1; letter-spacing: -0.02em">4.9</span>
+<svg role="img" aria-label="out of 5 stars" width="104" height="20" viewBox="0 0 124 24" fill="{{accent}}"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path><path d="M37 2l3.09 6.26L47 9.27l-5 4.87 1.18 6.88L37 17.77l-6.18 3.25L32 14.14 27 9.27l6.91-1.01L37 2z"></path><path d="M62 2l3.09 6.26L72 9.27l-5 4.87 1.18 6.88L62 17.77l-6.18 3.25L57 14.14 52 9.27l6.91-1.01L62 2z"></path><path d="M87 2l3.09 6.26L97 9.27l-5 4.87 1.18 6.88L87 17.77l-6.18 3.25L82 14.14 77 9.27l6.91-1.01L87 2z"></path><path d="M112 2l3.09 6.26L122 9.27l-5 4.87 1.18 6.88L112 17.77l-6.18 3.25L107 14.14 102 9.27l6.91-1.01L112 2z"></path></svg>
+<span style="font-size: 15px; color: #4A5261">average on Google</span>
+</div>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 16px">
+<li style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; background: #F4F6FA; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="{{accent}}" aria-hidden="true"><path d="M4 18v-5c0-4 2-7 6-8l.8 2C8.6 7.8 8 9.4 8 11h3v7H4zm9 0v-5c0-4 2-7 6-8l.8 2c-2.2.8-2.8 2.4-2.8 4h3v7h-7z"></path></svg>
+<p style="margin: 0">[PASTE A REAL GOOGLE REVIEW HERE]</p>
+<div style="margin-top: auto; font-size: 15px"><div style="font-weight: 600">[CUSTOMER NAME]</div><div style="color: #4A5261">[BUSINESS NAME, CITY]</div></div>
+</li>
+<li style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; background: #F4F6FA; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="{{accent}}" aria-hidden="true"><path d="M4 18v-5c0-4 2-7 6-8l.8 2C8.6 7.8 8 9.4 8 11h3v7H4zm9 0v-5c0-4 2-7 6-8l.8 2c-2.2.8-2.8 2.4-2.8 4h3v7h-7z"></path></svg>
+<p style="margin: 0">[PASTE A REAL GOOGLE REVIEW HERE]</p>
+<div style="margin-top: auto; font-size: 15px"><div style="font-weight: 600">[CUSTOMER NAME]</div><div style="color: #4A5261">[BUSINESS NAME, CITY]</div></div>
+</li>
+<li style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; background: #F4F6FA; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="{{accent}}" aria-hidden="true"><path d="M4 18v-5c0-4 2-7 6-8l.8 2C8.6 7.8 8 9.4 8 11h3v7H4zm9 0v-5c0-4 2-7 6-8l.8 2c-2.2.8-2.8 2.4-2.8 4h3v7h-7z"></path></svg>
+<p style="margin: 0">[PASTE A REAL GOOGLE REVIEW HERE]</p>
+<div style="margin-top: auto; font-size: 15px"><div style="font-weight: 600">[CUSTOMER NAME]</div><div style="color: #4A5261">[BUSINESS NAME, CITY]</div></div>
+</li>
+</ul>
+<a href="#google-reviews" style="align-self: flex-start; display: flex; align-items: center; min-height: 44px; font-weight: 600">Read more reviews on Google</a>
+</div>
+</section>
 
 </div>
 </template>
@@ -534,10 +661,13 @@ input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offse
 class Component extends DCLogic {
   state = {
     step: 1, done: false, amount: 75000, purpose: 'working',
-    bizName: '', industry: '', structure: '', timeInBiz: '', zip: '',
-    revenue: '', credit: '', hasLoans: '',
+    bizName: '', dba: '', industry: '', structure: '', startDate: '', ein: '',
+    bizStreet: '', bizCity: '', bizState: '', zip: '',
+    revenue: '', credit: '', hasLoans: '', loanBalance: '',
+    first: '', last: '', ownership: '', dob: '', ssn: '',
+    homeStreet: '', homeCity: '', homeState: '', homeZip: '', email: '', phone: '',
     bankConnected: false, files: [],
-    first: '', last: '', email: '', phone: '', password: '', consent: false,
+    password: '', consent: false, consentCredit: false, signature: '',
     errors: {}
   };
 
@@ -564,25 +694,49 @@ class Component extends DCLogic {
 
   check(s) {
     var e = {};
+    var states = ' AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY ';
+    function digits(v) { return String(v).replace(/\D/g, ''); }
+    function isState(v) { return /^[A-Z]{2}$/.test(v) && states.indexOf(' ' + v + ' ') >= 0; }
+    var now = new Date();
     if (s.step === 2) {
       if (!s.bizName.trim()) e.bizName = 'Enter your legal business name.';
       if (!s.industry) e.industry = 'Choose an industry.';
       if (!s.structure) e.structure = 'Choose a business structure.';
-      if (!s.timeInBiz) e.timeInBiz = 'Choose how long you have been in business.';
-      if (!/^\d{5}$/.test(s.zip.trim())) e.zip = 'Enter a 5-digit ZIP code.';
+      var sd = /^(0[1-9]|1[0-2])\/((?:19|20)\d{2})$/.exec(s.startDate.trim());
+      if (!sd || new Date(Number(sd[2]), Number(sd[1]) - 1, 1) > now) e.startDate = 'Enter the month and year as MM/YYYY.';
+      if (digits(s.ein).length !== 9) e.ein = 'Enter your 9-digit EIN.';
+      if (!s.bizStreet.trim()) e.bizStreet = 'Enter the business street address.';
+      if (!s.bizCity.trim()) e.bizCity = 'Enter the city.';
+      if (!isState(s.bizState)) e.bizState = 'Use a 2-letter state.';
+      if (!/^\d{5}$/.test(s.zip.trim())) e.zip = 'Enter a 5-digit ZIP.';
     } else if (s.step === 3) {
       if (!s.revenue) e.revenue = 'Choose your average monthly revenue.';
       if (!s.credit) e.credit = 'Choose a credit score range.';
       if (!s.hasLoans) e.hasLoans = 'Choose yes or no.';
+      if (s.hasLoans === 'yes' && !s.loanBalance) e.loanBalance = 'Choose an approximate balance.';
     } else if (s.step === 4) {
-      if (!s.bankConnected && !s.files.length) e.bank = 'Connect your bank or upload statements, or skip this step for now.';
-    } else if (s.step === 5) {
       if (!s.first.trim()) e.first = 'Enter your first name.';
       if (!s.last.trim()) e.last = 'Enter your last name.';
+      var own = Number(s.ownership);
+      if (!/^\d{1,3}$/.test(s.ownership.trim()) || own < 1 || own > 100) e.ownership = 'Enter a number from 1 to 100.';
+      var bd = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/((?:19|20)\d{2})$/.exec(s.dob.trim());
+      var born = bd ? new Date(Number(bd[3]), Number(bd[1]) - 1, Number(bd[2])) : null;
+      if (!born || born.getMonth() !== Number(bd[1]) - 1) e.dob = 'Enter your date of birth as MM/DD/YYYY.';
+      else if (new Date(born.getFullYear() + 18, born.getMonth(), born.getDate()) > now) e.dob = 'You must be at least 18 to apply.';
+      if (digits(s.ssn).length !== 9) e.ssn = 'Enter your 9-digit Social Security number.';
+      if (!s.homeStreet.trim()) e.homeStreet = 'Enter your home street address.';
+      if (!s.homeCity.trim()) e.homeCity = 'Enter the city.';
+      if (!isState(s.homeState)) e.homeState = 'Use a 2-letter state.';
+      if (!/^\d{5}$/.test(s.homeZip.trim())) e.homeZip = 'Enter a 5-digit ZIP.';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email.trim())) e.email = 'Enter a valid email address.';
-      if (s.phone.replace(/\D/g, '').length < 10) e.phone = 'Enter a 10-digit phone number.';
+      if (digits(s.phone).length < 10) e.phone = 'Enter a 10-digit phone number.';
+    } else if (s.step === 5) {
+      if (!s.bankConnected && !s.files.length) e.bank = 'Connect your bank or upload statements, or skip this step for now.';
+    } else if (s.step === 6) {
       if (s.password.length < 8) e.password = 'Use at least 8 characters.';
       if (!s.consent) e.consent = 'Please agree before submitting.';
+      if (!s.consentCredit) e.consentCredit = 'Please authorize the credit check before submitting.';
+      if (s.signature.trim().split(/\s+/).length < 2) e.signature = 'Type your first and last name to sign.';
     }
     return e;
   }
@@ -603,7 +757,8 @@ class Component extends DCLogic {
     var accent = this.props.accent ?? '#0066FF';
     var strict = this.props.requireFields ?? true;
     var errors = s.errors || {};
-    var names = ['', 'Funding need', 'Your business', 'Revenue and credit', 'Bank information', 'Your account'];
+    var names = ['', 'Funding need', 'Your business', 'Revenue and credit', 'Business owner', 'Bank information', 'Review and sign'];
+    var last = 6;
     var amountText = '$' + Number(s.amount).toLocaleString('en-US');
 
     var list = this.purposeList();
@@ -620,17 +775,18 @@ class Component extends DCLogic {
     function setter(name, kind) {
       return function (e) {
         var patch = {};
-        patch[name] = kind === 'checked' ? !!e.target.checked : kind === 'number' ? Number(e.target.value) : e.target.value;
+        patch[name] = kind === 'checked' ? !!e.target.checked : kind === 'number' ? Number(e.target.value) : kind === 'upper' ? String(e.target.value).toUpperCase() : e.target.value;
         if (errors[name]) { patch.errors = Object.assign({}, errors); delete patch.errors[name]; }
         self.setState(patch);
       };
     }
-    var fields = ['bizName', 'industry', 'structure', 'timeInBiz', 'zip', 'revenue', 'credit', 'first', 'last', 'email', 'phone', 'password'];
-    var v = { amount: s.amount, consent: !!s.consent }, on = { amount: setter('amount', 'number'), consent: setter('consent', 'checked') };
-    var err = { hasLoans: errors.hasLoans || '', bank: errors.bank || '', consent: errors.consent || '' }, bad = {};
+    var fields = ['bizName', 'dba', 'industry', 'structure', 'startDate', 'ein', 'bizStreet', 'bizCity', 'bizState', 'zip', 'revenue', 'credit', 'loanBalance', 'first', 'last', 'ownership', 'dob', 'ssn', 'homeStreet', 'homeCity', 'homeState', 'homeZip', 'email', 'phone', 'password', 'signature'];
+    var v = { amount: s.amount, consent: !!s.consent, consentCredit: !!s.consentCredit };
+    var on = { amount: setter('amount', 'number'), consent: setter('consent', 'checked'), consentCredit: setter('consentCredit', 'checked') };
+    var err = { hasLoans: errors.hasLoans || '', bank: errors.bank || '', consent: errors.consent || '', consentCredit: errors.consentCredit || '' }, bad = {};
     fields.forEach(function (f) {
       v[f] = s[f];
-      on[f] = setter(f, 'text');
+      on[f] = setter(f, f === 'bizState' || f === 'homeState' ? 'upper' : 'text');
       err[f] = errors[f] || '';
       bad[f] = !!errors[f];
     });
@@ -647,18 +803,18 @@ class Component extends DCLogic {
     function advance() {
       var found = strict ? self.check(s) : {};
       if (Object.keys(found).length) { self.setState({ errors: found }); return; }
-      if (s.step < 5) self.setState({ step: s.step + 1, errors: {} });
-      else { self.remember(s, current.label); self.setState({ done: true, errors: {} }); }
+      if (s.step < last) self.setState({ step: s.step + 1, errors: {} });
+      else { self.remember(s, current.label); self.setState({ done: true, errors: {}, ssn: '', ein: '', password: '' }); }
       self.toTop();
     }
 
-    var steps = ['Funding', 'Business', 'Revenue', 'Bank', 'Account'].map(function (label, i) {
+    var steps = ['Funding', 'Business', 'Revenue', 'Owner', 'Bank', 'Sign'].map(function (label, i) {
       var n = i + 1, done = n < s.step, now = n === s.step, lit = done || now;
       return {
         num: n, label: label, done: done, todo: !done,
         current: now ? 'step' : null,
-        flex: n < 5 ? '1 1 0%' : '0 0 auto',
-        line: n < 5,
+        flex: n < last ? '1 1 0%' : '0 0 auto',
+        line: n < last,
         bg: lit ? accent : '#FFFFFF', fg: lit ? '#FFFFFF' : '#4A5261', bd: lit ? accent : '#8A93A3',
         lineBg: done ? accent : '#D5DEEC',
         weight: now ? 600 : 500,
@@ -677,13 +833,17 @@ class Component extends DCLogic {
       is3: !s.done && s.step === 3,
       is4: !s.done && s.step === 4,
       is5: !s.done && s.step === 5,
+      is6: !s.done && s.step === 6,
       stepNum: s.step,
       stepName: names[s.step],
-      pct: s.step * 20,
-      pctCss: (s.step * 20) + '%',
       canBack: s.step > 1,
       canEdit: !s.done && s.step > 1,
-      nextLabel: s.step === 5 ? 'Submit and see my options' : 'Continue',
+      nextLabel: s.step === last ? 'Sign and submit' : 'Continue',
+      showLoanBalance: s.hasLoans === 'yes',
+      reviewBusiness: s.bizName.trim() || 'Not entered',
+      reviewOwner: (s.first.trim() + ' ' + s.last.trim()).trim() || 'Not entered',
+      reviewRequest: amountText + ' for ' + current.label.toLowerCase(),
+      today: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       next: advance,
       back: function () { self.setState({ step: Math.max(1, s.step - 1), errors: {} }); self.toTop(); },
       editRequest: function () { self.setState({ step: 1, errors: {} }); self.toTop(); },
@@ -704,7 +864,7 @@ class Component extends DCLogic {
       },
       files: s.files,
       hasFiles: s.files.length > 0,
-      skipBank: function () { self.setState({ step: 5, errors: {} }); self.toTop(); },
+      skipBank: function () { self.setState({ step: 6, errors: {} }); self.toTop(); },
       doneTitle: first ? 'Application received, ' + first + '.' : 'Application received.'
     };
   }
