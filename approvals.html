@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your approvals | CapDeck</title>
+<meta name="description" content="Compare your approvals from CapDeck lending partners.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Outfit:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6FA}
+a{color:#0A0B0D}a:hover{color:#0066FF}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+.btn{transition:transform .15s ease}
+.btn:hover{transform:translateY(-1px)}
+a:focus-visible,button:focus-visible{outline:3px solid #0066FF;outline-offset:3px}
+@media (max-width:700px){.hide-sm{display:none !important}}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<noscript><p style="font-family: system-ui, sans-serif; padding: 24px">This page needs JavaScript turned on.</p></noscript>
+<div id="root"></div>
+<template id="tpl">
+<div style="font-family: 'Geist', system-ui, sans-serif; color: #0A0B0D; background: #F4F6FA; line-height: 1.5; font-size: 17px; min-height: 100vh">
+
+<div style="background: #EEF4FF; font-size: 14px; text-align: center; padding: 8px 16px">Prototype with sample data. The lenders and offers shown here are examples.</div>
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #E3E7EE">
+<div style="max-width: 1240px; margin: 0 auto; padding: 14px clamp(16px, 3vw, 32px); display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<a href="index.html" style="display: flex; align-items: center; min-height: 44px"><img src="assets/capdeck-logo.png" alt="CapDeck home" width="1919" height="295" style="display: block; height: clamp(22px, 2vw, 28px); width: auto"></a>
+<div style="display: flex; align-items: center; gap: 8px 24px; font-size: 15px">
+<span class="hide-sm" style="color: #4A5261">{{hello}}</span>
+<a href="signin.html" style="display: flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: none">Sign out</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1240px; margin: 0 auto; padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px) 72px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px">
+<div style="flex: 1 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.02em; line-height: 1.1">Your approvals</h1>
+<p style="margin: 0; color: #4A5261; max-width: 640px">{{summary}}</p>
+</div>
+
+<sc-if value="{{hasPick}}" hint-placeholder-val="{{false}}">
+<div role="status" style="background: #E7F6EC; border: 1px solid #A6D9B8; border-radius: 16px; padding: 18px clamp(18px, 2.4vw, 24px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
+<div style="flex: 1 1 320px; min-width: 0">
+<div style="font-weight: 600">You selected {{pickedText}}.</div>
+<div style="font-size: 15px; color: #33453B">Your advisor will call to confirm the details and send the agreement for e-signature.</div>
+</div>
+<button type="button" onClick="{{clearPick}}" style="min-height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #0A0B0D; background: #FFFFFF; color: #0A0B0D; font-size: 15px; font-weight: 600">Change selection</button>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px">
+<span id="sort-label" style="font-size: 15px; color: #4A5261">Sort by</span>
+<div role="group" aria-labelledby="sort-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{sorts}}" as="item" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{item.on}}" onClick="{{item.pick}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 15px; font-weight: 500; background: {{item.bg}}; color: {{item.fg}}; border: 1.5px solid {{item.bd}}">{{item.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{offers}}" as="item" hint-placeholder-count="3">
+<li style="box-sizing: border-box; background: #FFFFFF; border: {{item.border}}; border-radius: 16px; padding: clamp(18px, 2.4vw, 28px); display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px">
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em">{{item.lender}}</h2>
+<span style="font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: #F4F6FA">{{item.product}}</span>
+</div>
+<sc-if value="{{item.tag}}" hint-placeholder-val="{{false}}"><span style="font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #EEF4FF; color: #0052CC">{{item.tag}}</span></sc-if>
+</div>
+<dl style="margin: 0; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 36px">
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Approved amount</dt><dd style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 32px; line-height: 1.05; letter-spacing: -0.02em; color: {{accent}}">{{item.amountText}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Term</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">{{item.term}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Payment</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">{{item.payment}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #4A5261">Total cost</dt><dd style="margin: 0; font-weight: 600; font-size: 18px">{{item.costText}}</dd></div>
+</dl>
+<sc-if value="{{item.open}}" hint-placeholder-val="{{false}}">
+<dl style="margin: 0; background: #F4F6FA; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Total repayment</dt><dd style="margin: 0; font-weight: 600">{{item.totalText}}</dd></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Cost per dollar borrowed</dt><dd style="margin: 0; font-weight: 600">{{item.rateText}}</dd></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Fees</dt><dd style="margin: 0; font-weight: 600; text-align: right">{{item.fee}}</dd></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px"><dt style="color: #4A5261">Paying early</dt><dd style="margin: 0; font-weight: 600; text-align: right">{{item.early}}</dd></div>
+</dl>
+</sc-if>
+<div style="padding-top: 16px; border-top: 1px solid #E3E7EE; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px">
+<div style="font-size: 15px; color: #4A5261">Funding: <span style="font-weight: 600; color: #0A0B0D">{{item.speed}}</span>. Offer expires in 7 days.</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" aria-expanded="{{item.open}}" onClick="{{item.toggle}}" style="min-height: 48px; padding: 0 16px; border-radius: 10px; border: 1px solid #8A93A3; background: #FFFFFF; color: #0A0B0D; font-size: 16px; font-weight: 600">{{item.detailsLabel}}</button>
+<button type="button" class="btn" aria-pressed="{{item.picked}}" onClick="{{item.pick}}" style="min-height: 48px; padding: 0 20px; border: 0; border-radius: 10px; background: {{item.pickBg}}; color: #FFFFFF; font-size: 16px; font-weight: 600">{{item.pickLabel}}</button>
+</div>
+</div>
+</li>
+</sc-for>
+</ul>
+
+<div style="background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 16px; padding: 20px clamp(18px, 2.4vw, 28px); display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em">Still reviewing</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<sc-for list="{{pending}}" as="item" hint-placeholder-count="2">
+<li style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid #E3E7EE"><span style="font-weight: 500">{{item.lender}}</span><span style="font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: #F4F6FA; color: #4A5261">In review</span></li>
+</sc-for>
+</ul>
+<div style="font-size: 15px; color: #4A5261">New approvals appear here as they arrive. We will also email you.</div>
+</div>
+
+</div>
+
+<aside style="flex: 1 1 280px; max-width: 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 16px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600; color: #4A5261">Your advisor</h2>
+<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em">[ADVISOR NAME]</div>
+<a href="tel:" style="display: flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>[PHONE NUMBER]</a>
+<a href="#callback" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 10px; border: 1px solid #8A93A3; background: #FFFFFF; color: #0A0B0D; font-size: 16px; font-weight: 600; text-decoration: none">Request a call back</a>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 16px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600; color: #4A5261">What happens next</h2>
+<ol style="margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<li>Compare your approvals and select one.</li>
+<li>Your advisor confirms the details with you.</li>
+<li>Sign the agreement and get funded.</li>
+</ol>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DDE2EA; border-radius: 16px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600; color: #4A5261">Your request</h2>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #4A5261">Amount</dt><dd style="margin: 0; font-weight: 600">{{amountText}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #4A5261">Purpose</dt><dd style="margin: 0; font-weight: 600; text-align: right">{{purpose}}</dd></div>
+</dl>
+</div>
+</aside>
+</main>
+
+</div>
+</template>
+<script>
+/* Small page runtime: renders the page template from the Component's values and keeps it in sync. */
+(function () {
+  'use strict';
+  var HOLE = /\{\{([^}]+)\}\}/g;
+  var WHOLE = /^\s*\{\{([^}]+)\}\}\s*$/;
+
+  function lookup(scope, path) {
+    path = path.trim();
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    if (path === 'null') return null;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.'), v = scope;
+    for (var i = 0; i < parts.length; i++) {
+      if (v == null) return undefined;
+      v = v[parts[i]];
+    }
+    return v;
+  }
+
+  function text(v) {
+    return v == null || v === false ? '' : String(v);
+  }
+
+  function fill(str, scope) {
+    return str.replace(HOLE, function (_, p) { return text(lookup(scope, p)); });
+  }
+
+  function eventFor(el, name) {
+    var type = name.slice(2).toLowerCase();
+    if (type === 'change') {
+      var t = (el.getAttribute('type') || '').toLowerCase();
+      if (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && t !== 'checkbox' && t !== 'radio' && t !== 'file')) return 'input';
+    }
+    return type;
+  }
+
+  function build(node, scope, out) {
+    if (node.nodeType === 3) {
+      out.appendChild(document.createTextNode(fill(node.data, scope)));
+      return;
+    }
+    if (node.nodeType !== 1) return;
+    var tag = node.localName, c;
+    if (tag === 'sc-for') {
+      var m = WHOLE.exec(node.getAttribute('list') || '');
+      var list = m ? lookup(scope, m[1]) : null;
+      var as = node.getAttribute('as') || 'item';
+      (list || []).forEach(function (item, idx) {
+        var inner = Object.create(scope);
+        inner[as] = item;
+        inner.$index = idx;
+        for (var k = node.firstChild; k; k = k.nextSibling) build(k, inner, out);
+      });
+      return;
+    }
+    if (tag === 'sc-if') {
+      var mi = WHOLE.exec(node.getAttribute('value') || '');
+      if (mi && lookup(scope, mi[1])) for (c = node.firstChild; c; c = c.nextSibling) build(c, scope, out);
+      return;
+    }
+    var el = document.createElementNS(node.namespaceURI, node.localName), handlers = null;
+    for (var i = 0; i < node.attributes.length; i++) {
+      var a = node.attributes[i], name = a.name, w = WHOLE.exec(a.value);
+      if (w) {
+        var raw = lookup(scope, w[1]);
+        if (name.slice(0, 2) === 'on') {
+          if (typeof raw === 'function') (handlers = handlers || {})[name] = raw;
+        } else if (raw === true) {
+          el.setAttribute(name, name.slice(0, 5) === 'aria-' ? 'true' : '');
+        } else if (raw === false) {
+          if (name.slice(0, 5) === 'aria-') el.setAttribute(name, 'false');
+        } else if (raw != null) {
+          el.setAttribute(name, String(raw));
+        }
+      } else {
+        el.setAttribute(name, fill(a.value, scope));
+      }
+    }
+    if (handlers) {
+      el.__h = {};
+      for (var key in handlers) el.__h[eventFor(el, key)] = handlers[key];
+    }
+    for (c = node.firstChild; c; c = c.nextSibling) build(c, scope, el);
+    out.appendChild(el);
+  }
+
+  function syncAttrs(live, next) {
+    var i, a;
+    for (i = live.attributes.length - 1; i >= 0; i--) {
+      a = live.attributes[i];
+      if (!next.hasAttribute(a.name)) live.removeAttribute(a.name);
+    }
+    for (i = 0; i < next.attributes.length; i++) {
+      a = next.attributes[i];
+      if (live.getAttribute(a.name) !== a.value) live.setAttribute(a.name, a.value);
+    }
+    live.__h = next.__h || null;
+  }
+
+  function syncControl(live, next) {
+    var tag = live.tagName;
+    if (tag === 'INPUT') {
+      var t = (live.getAttribute('type') || '').toLowerCase();
+      if (t === 'checkbox' || t === 'radio') {
+        var on = next.hasAttribute('checked');
+        if (live.checked !== on) live.checked = on;
+      } else if (t !== 'file' && next.hasAttribute('value') && live.value !== next.getAttribute('value')) {
+        live.value = next.getAttribute('value');
+      }
+    } else if ((tag === 'SELECT' || tag === 'TEXTAREA') && next.hasAttribute('value') && live.value !== next.getAttribute('value')) {
+      live.value = next.getAttribute('value');
+    }
+  }
+
+  function settle(node) {
+    if (node.nodeType !== 1) return;
+    var all = [node].concat([].slice.call(node.querySelectorAll('*')));
+    all.forEach(function (el) { if (el.tagName === 'SELECT' || el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') syncControl(el, el); });
+  }
+
+  function sameKind(live, next) {
+    if (live.nodeType !== next.nodeType || live.nodeName !== next.nodeName) return false;
+    if (live.nodeType !== 1) return true;
+    if (live.namespaceURI !== next.namespaceURI) return false;
+    if ((live.getAttribute('id') || '') !== (next.getAttribute('id') || '')) return false;
+    if (live.tagName === 'INPUT' && live.getAttribute('type') !== next.getAttribute('type')) return false;
+    return true;
+  }
+
+  function morph(liveParent, nextParent) {
+    var live = liveParent.firstChild, next = nextParent.firstChild;
+    while (next) {
+      var after = next.nextSibling;
+      if (!live) {
+        liveParent.appendChild(next);
+        settle(next);
+      } else if (!sameKind(live, next)) {
+        var dead = live;
+        live = live.nextSibling;
+        liveParent.replaceChild(next, dead);
+        settle(next);
+      } else {
+        if (live.nodeType === 3) {
+          if (live.data !== next.data) live.data = next.data;
+        } else {
+          syncAttrs(live, next);
+          morph(live, next);
+          syncControl(live, next);
+        }
+        live = live.nextSibling;
+      }
+      next = after;
+    }
+    while (live) {
+      var gone = live;
+      live = live.nextSibling;
+      liveParent.removeChild(gone);
+    }
+  }
+
+  function DCLogic(props) {
+    this.props = props || {};
+  }
+  DCLogic.prototype.setState = function (patch) {
+    var add = typeof patch === 'function' ? patch(this.state, this.props) : patch;
+    this.state = Object.assign({}, this.state, add);
+    if (this.__render) this.__render();
+  };
+  DCLogic.prototype.forceUpdate = function () {
+    if (this.__render) this.__render();
+  };
+  window.DCLogic = DCLogic;
+
+  window.mountPage = function (Component, props) {
+    var root = document.getElementById('root');
+    var tpl = document.getElementById('tpl').content;
+    var page = new Component(props);
+    var queued = false;
+
+    function render() {
+      queued = false;
+      var vals = page.renderVals() || {};
+      var next = document.createElement('div');
+      for (var n = tpl.firstChild; n; n = n.nextSibling) build(n, vals, next);
+      morph(root, next);
+    }
+    page.__render = function () {
+      if (queued) return;
+      queued = true;
+      Promise.resolve().then(render);
+    };
+
+    ['click', 'input', 'change', 'submit'].forEach(function (type) {
+      root.addEventListener(type, function (e) {
+        var n = e.target;
+        while (n && n !== root.parentNode) {
+          if (n.__h && n.__h[type]) n.__h[type](e);
+          n = n.parentNode;
+        }
+      });
+    });
+
+    render();
+    if (typeof page.componentDidMount === 'function') page.componentDidMount();
+  };
+})();
+</script>
+<script>
+class Component extends DCLogic {
+  state = { sort: 'amount', picked: '', open: '', amount: 75000, purpose: 'Working capital', first: '' };
+
+  componentDidMount() {
+    try {
+      var saved = JSON.parse(window.sessionStorage.getItem('capdeck_request') || 'null');
+      if (saved && saved.amount) {
+        this.setState({ amount: Number(saved.amount) || 75000, purpose: String(saved.purpose || 'Working capital'), first: String(saved.first || '') });
+      }
+    } catch (e) {}
+  }
+
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var accent = this.props.accent ?? '#0066FF';
+    function money(n) { return '$' + Number(n).toLocaleString('en-US'); }
+
+    // Sample offers, scaled to the requested amount so the screen reads sensibly for any request.
+    var asked = Math.min(Math.max(Number(s.amount) || 75000, 5000), 2000000);
+    function sample(o) {
+      var amount = Math.min(2000000, Math.max(5000, Math.round(asked * o.share / 1000) * 1000));
+      var cost = Math.round(amount * o.rate / 100) * 100;
+      var weekly = money(Math.round((amount + cost) / o.weeks)) + ' weekly';
+      return {
+        id: o.id, lender: o.lender, product: o.product, amount: amount, term: o.term,
+        payment: o.product === 'Line of credit' ? weekly + ' if fully drawn' : weekly,
+        cost: cost, total: amount + cost, rate: o.rate, days: o.days, speed: o.speed,
+        fee: o.feeRate ? 'Origination fee of ' + money(Math.round(amount * o.feeRate / 100) * 100) + ', included in the total' : o.fee,
+        early: o.early
+      };
+    }
+    var data = [
+      { id: 'a', lender: 'Lending Partner A', product: 'Term loan', share: 1, term: '18 months', weeks: 78, rate: 0.22, days: 1, speed: '1 business day', feeRate: 0.02, early: 'Early payoff discount available' },
+      { id: 'b', lender: 'Lending Partner B', product: 'Line of credit', share: 0.8, term: '12 months per draw', weeks: 52, rate: 0.115, days: 0, speed: 'Same day', fee: 'No fee to open. 2% fee per draw, included in the total', early: 'You pay only for what you draw' },
+      { id: 'c', lender: 'Lending Partner C', product: 'Term loan', share: 1.3, term: '24 months', weeks: 104, rate: 0.3, days: 2, speed: '2 business days', feeRate: 0.025, early: 'No early payoff discount' }
+    ].map(sample);
+
+    var sortDefs = [
+      { id: 'amount', label: 'Highest amount', tag: 'Highest amount', by: function (a, b) { return b.amount - a.amount; } },
+      { id: 'cost', label: 'Lowest cost', tag: 'Lowest cost', by: function (a, b) { return a.rate - b.rate; } },
+      { id: 'speed', label: 'Fastest funding', tag: 'Fastest funding', by: function (a, b) { return a.days - b.days; } }
+    ];
+    var active = sortDefs.filter(function (d) { return d.id === s.sort; })[0] || sortDefs[0];
+
+    var offers = data.slice().sort(active.by).map(function (o, i) {
+      var picked = s.picked === o.id, open = s.open === o.id;
+      return {
+        lender: o.lender,
+        product: o.product,
+        tag: i === 0 ? active.tag : '',
+        amountText: money(o.amount),
+        term: o.term,
+        payment: o.payment,
+        costText: money(o.cost),
+        totalText: money(o.total),
+        rateText: (Math.round(o.rate * 1000) / 10) + ' cents',
+        fee: o.fee,
+        early: o.early,
+        speed: o.speed,
+        open: open,
+        detailsLabel: open ? 'Hide details' : 'View details',
+        toggle: function () { self.setState({ open: open ? '' : o.id }); },
+        picked: picked,
+        pickLabel: picked ? 'Selected' : 'Select this offer',
+        pickBg: picked ? '#0A0B0D' : accent,
+        pick: function () { self.setState({ picked: o.id }); try { window.scrollTo(0, 0); } catch (e) {} },
+        border: picked ? '2px solid ' + accent : '1px solid #DDE2EA'
+      };
+    });
+
+    var sorts = sortDefs.map(function (d) {
+      var on = d.id === active.id;
+      return {
+        label: d.label, on: on,
+        pick: function () { self.setState({ sort: d.id }); },
+        bg: on ? '#0A0B0D' : '#FFFFFF', fg: on ? '#FFFFFF' : '#0A0B0D', bd: on ? '#0A0B0D' : '#8A93A3'
+      };
+    });
+
+    var chosen = data.filter(function (o) { return o.id === s.picked; })[0];
+    var first = (s.first || '').trim();
+    return {
+      accent: accent,
+      hello: first ? 'Signed in as ' + first : 'Signed in',
+      summary: data.length + ' lenders have sent approvals for your ' + money(s.amount) + ' request (' + String(s.purpose).toLowerCase() + '). 2 more are still reviewing it.',
+      amountText: money(s.amount),
+      purpose: s.purpose,
+      sorts: sorts,
+      offers: offers,
+      pending: [{ lender: 'Lending Partner D' }, { lender: 'Lending Partner E' }],
+      hasPick: !!chosen,
+      pickedText: chosen ? chosen.lender + ', ' + money(chosen.amount) + ' ' + chosen.product.toLowerCase() : '',
+      clearPick: function () { self.setState({ picked: '' }); }
+    };
+  }
+}
+mountPage(Component, {"accent": "#0066FF"});
+</script>
+</body>
+</html>

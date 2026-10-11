@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply | CapDeck</title>
+<meta name="description" content="Start your CapDeck funding application.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Outfit:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EEF4FF}
+.show-sm{display:none}
+@media (max-width:700px){.show-sm{display:block !important}}
+a{color:#0A0B0D}a:hover{color:#0066FF}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+.inp{width:100%;height:52px;box-sizing:border-box;padding:0 14px;border:1px solid #8A93A3;border-radius:10px;background:#FFFFFF;color:#0A0B0D;font-size:16px}
+.inp[aria-invalid="true"]{border-color:#B42318;box-shadow:0 0 0 1px #B42318}
+.btn{transition:transform .15s ease}
+.btn:hover{transform:translateY(-1px)}
+a:focus-visible,button:focus-visible{outline:3px solid #0066FF;outline-offset:3px}
+input:focus-visible,select:focus-visible{outline:3px solid #0066FF;outline-offset:1px}
+@media (max-width:700px){.hide-sm{display:none !important}}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<noscript><p style="font-family: system-ui, sans-serif; padding: 24px">This page needs JavaScript turned on.</p></noscript>
+<div id="root"></div>
+<template id="tpl">
+<div style="font-family: 'Geist', system-ui, sans-serif; color: #0A0B0D; background: #EEF4FF; line-height: 1.5; font-size: 17px; min-height: 100vh">
+
+<div style="background: #FFFFFF; border-bottom: 1px solid #E3E7EE; color: #4A5261; font-size: 14px; text-align: center; padding: 8px 16px">Prototype with sample data. Nothing you enter here is saved or sent.</div>
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #E3E7EE">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px clamp(16px, 3vw, 32px); display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<a href="index.html" style="display: flex; align-items: center; min-height: 44px"><img src="assets/capdeck-logo.png" alt="CapDeck home" width="1919" height="295" style="display: block; height: clamp(22px, 2vw, 28px); width: auto"></a>
+<div style="display: flex; align-items: center; gap: 8px 24px; font-size: 15px">
+<span class="hide-sm" style="color: #4A5261">Questions? <a href="tel:" style="font-weight: 600">[PHONE NUMBER]</a></span>
+<a href="signin.html" style="display: flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: none">Sign in</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1120px; margin: 0 auto; padding: clamp(20px, 4vw, 48px) clamp(16px, 3vw, 32px) 72px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px">
+<div style="flex: 1 1 520px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; box-shadow: 0 18px 36px -26px rgba(10, 11, 13, 0.35); padding: clamp(20px, 3vw, 40px)">
+
+<sc-if value="{{isForm}}" hint-placeholder-val="{{true}}">
+<div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E3E7EE; display: flex; flex-direction: column; gap: 12px">
+<ol aria-label="Application steps" style="margin: 0; padding: 0; list-style: none; display: flex; align-items: flex-start">
+<sc-for list="{{steps}}" as="item" hint-placeholder-count="5">
+<li aria-current="{{item.current}}" style="flex: {{item.flex}}; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center">
+<div style="flex: none; width: 32px; height: 32px; box-sizing: border-box; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: {{item.bg}}; color: {{item.fg}}; border: 1.5px solid {{item.bd}}">
+<sc-if value="{{item.done}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+<sc-if value="{{item.todo}}" hint-placeholder-val="{{true}}"><span>{{item.num}}</span></sc-if>
+</div>
+<sc-if value="{{item.line}}" hint-placeholder-val="{{true}}"><div aria-hidden="true" style="flex: 1; height: 2px; margin: 0 8px; border-radius: 2px; background: {{item.lineBg}}"></div></sc-if>
+</div>
+<div class="hide-sm" style="font-size: 13px; font-weight: {{item.weight}}; color: {{item.labelFg}}">{{item.label}}</div>
+</li>
+</sc-for>
+</ol>
+<div class="show-sm" style="font-size: 14px; color: #4A5261">Step {{stepNum}} of 5: {{stepName}}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is1}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">What do you need?</h1>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px">
+<label for="amount" style="font-size: 15px; font-weight: 600">How much do you need?</label>
+<div style="font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 32px; line-height: 1; letter-spacing: -0.02em; color: {{accent}}">{{amountText}}</div>
+</div>
+<input id="amount" name="amount" type="range" min="5000" max="2000000" step="5000" value="{{v.amount}}" aria-valuetext="{{amountText}}" onChange="{{on.amount}}" style="width: 100%; height: 36px; margin: 0; accent-color: {{accent}}; cursor: pointer">
+<div aria-hidden="true" style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5261"><span>$5K</span><span>$2M</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div id="purpose-label" style="font-size: 15px; font-weight: 600">What will you use it for?</div>
+<div role="group" aria-labelledby="purpose-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{purposes}}" as="item" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{item.on}}" onClick="{{item.pick}}" style="flex: 1 1 30%; min-width: 140px; box-sizing: border-box; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 12px; border-radius: 10px; font-size: 15px; font-weight: 500; text-align: left; background: {{item.bg}}; color: {{item.fg}}; border: 1.5px solid {{item.bd}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{item.icon}}"></path></svg>{{item.label}}</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is2}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Tell us about your business</h1>
+<p style="margin: 0; color: #4A5261">The basics lenders need to see if you qualify.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="bizName" style="font-size: 14px; font-weight: 600">Legal business name</label>
+<input class="inp" id="bizName" name="bizName" type="text" autocomplete="organization" value="{{v.bizName}}" onChange="{{on.bizName}}" aria-invalid="{{bad.bizName}}">
+<sc-if value="{{err.bizName}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bizName}}</div></sc-if>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="industry" style="font-size: 14px; font-weight: 600">Industry</label>
+<select class="inp" id="industry" name="industry" value="{{v.industry}}" onChange="{{on.industry}}" aria-invalid="{{bad.industry}}">
+<option value="">Select</option>
+<option value="restaurant">Restaurant and food service</option>
+<option value="retail">Retail</option>
+<option value="construction">Construction and trades</option>
+<option value="transport">Transportation and logistics</option>
+<option value="health">Health and wellness</option>
+<option value="professional">Professional services</option>
+<option value="manufacturing">Manufacturing</option>
+<option value="other">Other</option>
+</select>
+<sc-if value="{{err.industry}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.industry}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="structure" style="font-size: 14px; font-weight: 600">Business structure</label>
+<select class="inp" id="structure" name="structure" value="{{v.structure}}" onChange="{{on.structure}}" aria-invalid="{{bad.structure}}">
+<option value="">Select</option>
+<option value="llc">LLC</option>
+<option value="corp">Corporation</option>
+<option value="sole">Sole proprietorship</option>
+<option value="partnership">Partnership</option>
+</select>
+<sc-if value="{{err.structure}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.structure}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="timeInBiz" style="font-size: 14px; font-weight: 600">Time in business</label>
+<select class="inp" id="timeInBiz" name="timeInBiz" value="{{v.timeInBiz}}" onChange="{{on.timeInBiz}}" aria-invalid="{{bad.timeInBiz}}">
+<option value="">Select</option>
+<option value="under6">Less than 6 months</option>
+<option value="6to12">6 to 12 months</option>
+<option value="1to2">1 to 2 years</option>
+<option value="2to5">2 to 5 years</option>
+<option value="over5">More than 5 years</option>
+</select>
+<sc-if value="{{err.timeInBiz}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.timeInBiz}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="zip" style="font-size: 14px; font-weight: 600">Business ZIP code</label>
+<input class="inp" id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" value="{{v.zip}}" onChange="{{on.zip}}" aria-invalid="{{bad.zip}}">
+<sc-if value="{{err.zip}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.zip}}</div></sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is3}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Revenue and credit</h1>
+<p style="margin: 0; color: #4A5261">Estimates are fine at this stage.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="revenue" style="font-size: 14px; font-weight: 600">Average monthly revenue</label>
+<select class="inp" id="revenue" name="revenue" value="{{v.revenue}}" onChange="{{on.revenue}}" aria-invalid="{{bad.revenue}}">
+<option value="">Select</option>
+<option value="under10">Under $10,000</option>
+<option value="10to25">$10,000 to $25,000</option>
+<option value="25to50">$25,000 to $50,000</option>
+<option value="50to100">$50,000 to $100,000</option>
+<option value="100to250">$100,000 to $250,000</option>
+<option value="over250">Over $250,000</option>
+</select>
+<sc-if value="{{err.revenue}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.revenue}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="credit" style="font-size: 14px; font-weight: 600">Your estimated personal credit score</label>
+<select class="inp" id="credit" name="credit" value="{{v.credit}}" onChange="{{on.credit}}" aria-invalid="{{bad.credit}}">
+<option value="">Select</option>
+<option value="720">720 or higher</option>
+<option value="680">680 to 719</option>
+<option value="640">640 to 679</option>
+<option value="600">600 to 639</option>
+<option value="under600">Below 600</option>
+<option value="unsure">Not sure</option>
+</select>
+<div style="font-size: 14px; color: #4A5261">Your own estimate. Answering this does not affect your credit.</div>
+<sc-if value="{{err.credit}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.credit}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div id="loans-label" style="font-size: 14px; font-weight: 600">Do you have any open business loans or advances?</div>
+<div role="group" aria-labelledby="loans-label" style="display: flex; gap: 8px">
+<button type="button" aria-pressed="{{loanYes.on}}" onClick="{{loanYes.pick}}" style="min-width: 96px; min-height: 48px; padding: 0 20px; border-radius: 10px; font-size: 16px; font-weight: 500; background: {{loanYes.bg}}; color: {{loanYes.fg}}; border: 1.5px solid {{loanYes.bd}}">Yes</button>
+<button type="button" aria-pressed="{{loanNo.on}}" onClick="{{loanNo.pick}}" style="min-width: 96px; min-height: 48px; padding: 0 20px; border-radius: 10px; font-size: 16px; font-weight: 500; background: {{loanNo.bg}}; color: {{loanNo.fg}}; border: 1.5px solid {{loanNo.bd}}">No</button>
+</div>
+<sc-if value="{{err.hasLoans}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.hasLoans}}</div></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is4}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Share your bank information</h1>
+<p style="margin: 0; color: #4A5261">Lenders use recent bank activity to size their offers. Choose whichever is easier.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 230px; min-width: 0; box-sizing: border-box; border: 1px solid #D5DEEC; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div aria-hidden="true" style="width: 44px; height: 44px; border-radius: 12px; background: #EEF4FF; color: {{accent}}; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"></path></svg></div>
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em">Connect your bank</h2>
+<p style="margin: 0; font-size: 15px; color: #4A5261">Sign in to your bank through a secure provider. The fastest option.</p>
+<sc-if value="{{bankOff}}" hint-placeholder-val="{{true}}"><button type="button" onClick="{{connectBank}}" style="margin-top: auto; align-self: flex-start; min-height: 48px; padding: 0 18px; border-radius: 10px; border: 1.5px solid {{accent}}; background: #FFFFFF; color: {{accent}}; font-size: 16px; font-weight: 600">Connect securely</button></sc-if>
+<sc-if value="{{bankOn}}" hint-placeholder-val="{{false}}"><div style="margin-top: auto; display: flex; align-items: center; gap: 8px; min-height: 48px; font-weight: 600; color: #067647"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Bank connected</div></sc-if>
+</div>
+<div style="flex: 1 1 230px; min-width: 0; box-sizing: border-box; border: 1px solid #D5DEEC; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div aria-hidden="true" style="width: 44px; height: 44px; border-radius: 12px; background: #EEF4FF; color: {{accent}}; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"></path></svg></div>
+<h2 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em">Upload statements</h2>
+<label for="files" style="font-size: 15px; color: #4A5261">PDF statements for the last 3 months of your business account.</label>
+<input id="files" name="files" type="file" accept=".pdf,application/pdf" multiple onChange="{{onFiles}}" style="margin-top: auto; max-width: 100%; min-height: 44px; font-size: 15px">
+<sc-if value="{{hasFiles}}" hint-placeholder-val="{{false}}">
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 14px">
+<sc-for list="{{files}}" as="item" hint-placeholder-count="1">
+<li style="display: flex; align-items: center; gap: 8px; color: #067647; overflow-wrap: anywhere"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{item.name}}</li>
+</sc-for>
+</ul>
+</sc-if>
+</div>
+</div>
+<sc-if value="{{err.bank}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.bank}}</div></sc-if>
+<button type="button" onClick="{{skipBank}}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: none; color: #0A0B0D; font-size: 15px; font-weight: 600; text-decoration: underline; text-align: left">Skip for now. An advisor will collect this later.</button>
+</div>
+</sc-if>
+
+<sc-if value="{{is5}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">Create your account</h1>
+<p style="margin: 0; color: #4A5261">You will sign in with these details to see your approvals.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="first" style="font-size: 14px; font-weight: 600">First name</label>
+<input class="inp" id="first" name="first" type="text" autocomplete="given-name" value="{{v.first}}" onChange="{{on.first}}" aria-invalid="{{bad.first}}">
+<sc-if value="{{err.first}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.first}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="last" style="font-size: 14px; font-weight: 600">Last name</label>
+<input class="inp" id="last" name="last" type="text" autocomplete="family-name" value="{{v.last}}" onChange="{{on.last}}" aria-invalid="{{bad.last}}">
+<sc-if value="{{err.last}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.last}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="email" style="font-size: 14px; font-weight: 600">Email</label>
+<input class="inp" id="email" name="email" type="email" autocomplete="email" value="{{v.email}}" onChange="{{on.email}}" aria-invalid="{{bad.email}}">
+<sc-if value="{{err.email}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.email}}</div></sc-if>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="phone" style="font-size: 14px; font-weight: 600">Mobile phone</label>
+<input class="inp" id="phone" name="phone" type="tel" autocomplete="tel" value="{{v.phone}}" onChange="{{on.phone}}" aria-invalid="{{bad.phone}}">
+<sc-if value="{{err.phone}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.phone}}</div></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="password" style="font-size: 14px; font-weight: 600">Create a password</label>
+<input class="inp" id="password" name="password" type="password" autocomplete="new-password" value="{{v.password}}" onChange="{{on.password}}" aria-invalid="{{bad.password}}">
+<div style="font-size: 14px; color: #4A5261">At least 8 characters.</div>
+<sc-if value="{{err.password}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.password}}</div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px"><input id="consent" name="consent" type="checkbox" checked="{{v.consent}}" onChange="{{on.consent}}" style="flex: none; width: 22px; height: 22px; margin: 1px 0 0; accent-color: {{accent}}"><span>I agree to the <a href="#terms">Terms of Use</a> and <a href="#privacy">Privacy Policy</a>, and I authorize CapDeck to share my information with its lending partners to find funding options. [ADD YOUR CREDIT-CHECK AUTHORIZATION WORDING]</span></label>
+<sc-if value="{{err.consent}}" hint-placeholder-val="{{false}}"><div role="alert" style="font-size: 14px; color: #B42318">{{err.consent}}</div></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isForm}}" hint-placeholder-val="{{true}}">
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<sc-if value="{{canBack}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{back}}" style="min-height: 52px; padding: 0 20px; border-radius: 10px; border: 1px solid #8A93A3; background: #FFFFFF; color: #0A0B0D; font-size: 16px; font-weight: 600">Back</button></sc-if>
+<button type="button" class="btn" onClick="{{next}}" style="margin-left: auto; display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 24px; border: 0; border-radius: 10px; background: {{accent}}; color: #FFFFFF; font-size: 17px; font-weight: 600">{{nextLabel}}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px">
+<div aria-hidden="true" style="width: 56px; height: 56px; border-radius: 50%; background: #E7F6EC; color: #067647; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<h1 style="margin: 0; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1">{{doneTitle}}</h1>
+<p style="margin: 0; color: #4A5261; max-width: 520px">We are sharing your request with our lending partners now. Each approval appears in your account as it arrives, usually within [TIMEFRAME].</p>
+<ol style="margin: 0 0 8px; padding: 16px 20px 16px 40px; box-sizing: border-box; width: 100%; max-width: 520px; background: #F4F6FA; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<li>Lenders review your request and send their approvals.</li>
+<li>You compare the offers in your account and select one.</li>
+<li>Your advisor confirms the details and you sign.</li>
+</ol>
+<a class="btn" href="approvals.html" style="display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 24px; border-radius: 10px; background: {{accent}}; color: #FFFFFF; font-size: 17px; font-weight: 600; text-decoration: none">View my approvals<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</sc-if>
+
+</div>
+
+<aside style="flex: 1 1 260px; max-width: 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; overflow: hidden">
+<img src="assets/cafe-owners.jpg" alt="" width="982" height="652" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 20%">
+<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600; color: #4A5261">Your request</h2>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #4A5261">Amount</dt><dd style="margin: 0; font-weight: 600">{{amountText}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #4A5261">Purpose</dt><dd style="margin: 0; font-weight: 600; text-align: right">{{purposeLabel}}</dd></div>
+</dl>
+<sc-if value="{{canEdit}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{editRequest}}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: none; color: #0A0B0D; font-size: 15px; font-weight: 600; text-decoration: underline">Change</button></sc-if>
+</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D5DEEC; border-radius: 16px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600; color: #4A5261">Trusted by business owners</h2>
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="flex: none; min-width: 82px; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em">7,250</span><span style="font-size: 15px; color: #4A5261">businesses funded</span></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="flex: none; min-width: 82px; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em">$800M+</span><span style="font-size: 15px; color: #4A5261">delivered to small businesses</span></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="flex: none; min-width: 82px; font-family: 'Outfit', 'Geist', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em">4.9</span><span style="font-size: 15px; color: #4A5261">average star rating on Google</span></div>
+</div>
+<ul style="margin: 0; padding: 4px 8px; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+<li style="display: flex; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Takes about 2 minutes</li>
+<li style="display: flex; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>No obligation</li>
+<li style="display: flex; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Offers from several lenders in one place</li>
+</ul>
+</aside>
+</main>
+
+</div>
+</template>
+<script>
+/* Small page runtime: renders the page template from the Component's values and keeps it in sync. */
+(function () {
+  'use strict';
+  var HOLE = /\{\{([^}]+)\}\}/g;
+  var WHOLE = /^\s*\{\{([^}]+)\}\}\s*$/;
+
+  function lookup(scope, path) {
+    path = path.trim();
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    if (path === 'null') return null;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.'), v = scope;
+    for (var i = 0; i < parts.length; i++) {
+      if (v == null) return undefined;
+      v = v[parts[i]];
+    }
+    return v;
+  }
+
+  function text(v) {
+    return v == null || v === false ? '' : String(v);
+  }
+
+  function fill(str, scope) {
+    return str.replace(HOLE, function (_, p) { return text(lookup(scope, p)); });
+  }
+
+  function eventFor(el, name) {
+    var type = name.slice(2).toLowerCase();
+    if (type === 'change') {
+      var t = (el.getAttribute('type') || '').toLowerCase();
+      if (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && t !== 'checkbox' && t !== 'radio' && t !== 'file')) return 'input';
+    }
+    return type;
+  }
+
+  function build(node, scope, out) {
+    if (node.nodeType === 3) {
+      out.appendChild(document.createTextNode(fill(node.data, scope)));
+      return;
+    }
+    if (node.nodeType !== 1) return;
+    var tag = node.localName, c;
+    if (tag === 'sc-for') {
+      var m = WHOLE.exec(node.getAttribute('list') || '');
+      var list = m ? lookup(scope, m[1]) : null;
+      var as = node.getAttribute('as') || 'item';
+      (list || []).forEach(function (item, idx) {
+        var inner = Object.create(scope);
+        inner[as] = item;
+        inner.$index = idx;
+        for (var k = node.firstChild; k; k = k.nextSibling) build(k, inner, out);
+      });
+      return;
+    }
+    if (tag === 'sc-if') {
+      var mi = WHOLE.exec(node.getAttribute('value') || '');
+      if (mi && lookup(scope, mi[1])) for (c = node.firstChild; c; c = c.nextSibling) build(c, scope, out);
+      return;
+    }
+    var el = document.createElementNS(node.namespaceURI, node.localName), handlers = null;
+    for (var i = 0; i < node.attributes.length; i++) {
+      var a = node.attributes[i], name = a.name, w = WHOLE.exec(a.value);
+      if (w) {
+        var raw = lookup(scope, w[1]);
+        if (name.slice(0, 2) === 'on') {
+          if (typeof raw === 'function') (handlers = handlers || {})[name] = raw;
+        } else if (raw === true) {
+          el.setAttribute(name, name.slice(0, 5) === 'aria-' ? 'true' : '');
+        } else if (raw === false) {
+          if (name.slice(0, 5) === 'aria-') el.setAttribute(name, 'false');
+        } else if (raw != null) {
+          el.setAttribute(name, String(raw));
+        }
+      } else {
+        el.setAttribute(name, fill(a.value, scope));
+      }
+    }
+    if (handlers) {
+      el.__h = {};
+      for (var key in handlers) el.__h[eventFor(el, key)] = handlers[key];
+    }
+    for (c = node.firstChild; c; c = c.nextSibling) build(c, scope, el);
+    out.appendChild(el);
+  }
+
+  function syncAttrs(live, next) {
+    var i, a;
+    for (i = live.attributes.length - 1; i >= 0; i--) {
+      a = live.attributes[i];
+      if (!next.hasAttribute(a.name)) live.removeAttribute(a.name);
+    }
+    for (i = 0; i < next.attributes.length; i++) {
+      a = next.attributes[i];
+      if (live.getAttribute(a.name) !== a.value) live.setAttribute(a.name, a.value);
+    }
+    live.__h = next.__h || null;
+  }
+
+  function syncControl(live, next) {
+    var tag = live.tagName;
+    if (tag === 'INPUT') {
+      var t = (live.getAttribute('type') || '').toLowerCase();
+      if (t === 'checkbox' || t === 'radio') {
+        var on = next.hasAttribute('checked');
+        if (live.checked !== on) live.checked = on;
+      } else if (t !== 'file' && next.hasAttribute('value') && live.value !== next.getAttribute('value')) {
+        live.value = next.getAttribute('value');
+      }
+    } else if ((tag === 'SELECT' || tag === 'TEXTAREA') && next.hasAttribute('value') && live.value !== next.getAttribute('value')) {
+      live.value = next.getAttribute('value');
+    }
+  }
+
+  function settle(node) {
+    if (node.nodeType !== 1) return;
+    var all = [node].concat([].slice.call(node.querySelectorAll('*')));
+    all.forEach(function (el) { if (el.tagName === 'SELECT' || el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') syncControl(el, el); });
+  }
+
+  function sameKind(live, next) {
+    if (live.nodeType !== next.nodeType || live.nodeName !== next.nodeName) return false;
+    if (live.nodeType !== 1) return true;
+    if (live.namespaceURI !== next.namespaceURI) return false;
+    if ((live.getAttribute('id') || '') !== (next.getAttribute('id') || '')) return false;
+    if (live.tagName === 'INPUT' && live.getAttribute('type') !== next.getAttribute('type')) return false;
+    return true;
+  }
+
+  function morph(liveParent, nextParent) {
+    var live = liveParent.firstChild, next = nextParent.firstChild;
+    while (next) {
+      var after = next.nextSibling;
+      if (!live) {
+        liveParent.appendChild(next);
+        settle(next);
+      } else if (!sameKind(live, next)) {
+        var dead = live;
+        live = live.nextSibling;
+        liveParent.replaceChild(next, dead);
+        settle(next);
+      } else {
+        if (live.nodeType === 3) {
+          if (live.data !== next.data) live.data = next.data;
+        } else {
+          syncAttrs(live, next);
+          morph(live, next);
+          syncControl(live, next);
+        }
+        live = live.nextSibling;
+      }
+      next = after;
+    }
+    while (live) {
+      var gone = live;
+      live = live.nextSibling;
+      liveParent.removeChild(gone);
+    }
+  }
+
+  function DCLogic(props) {
+    this.props = props || {};
+  }
+  DCLogic.prototype.setState = function (patch) {
+    var add = typeof patch === 'function' ? patch(this.state, this.props) : patch;
+    this.state = Object.assign({}, this.state, add);
+    if (this.__render) this.__render();
+  };
+  DCLogic.prototype.forceUpdate = function () {
+    if (this.__render) this.__render();
+  };
+  window.DCLogic = DCLogic;
+
+  window.mountPage = function (Component, props) {
+    var root = document.getElementById('root');
+    var tpl = document.getElementById('tpl').content;
+    var page = new Component(props);
+    var queued = false;
+
+    function render() {
+      queued = false;
+      var vals = page.renderVals() || {};
+      var next = document.createElement('div');
+      for (var n = tpl.firstChild; n; n = n.nextSibling) build(n, vals, next);
+      morph(root, next);
+    }
+    page.__render = function () {
+      if (queued) return;
+      queued = true;
+      Promise.resolve().then(render);
+    };
+
+    ['click', 'input', 'change', 'submit'].forEach(function (type) {
+      root.addEventListener(type, function (e) {
+        var n = e.target;
+        while (n && n !== root.parentNode) {
+          if (n.__h && n.__h[type]) n.__h[type](e);
+          n = n.parentNode;
+        }
+      });
+    });
+
+    render();
+    if (typeof page.componentDidMount === 'function') page.componentDidMount();
+  };
+})();
+</script>
+<script>
+class Component extends DCLogic {
+  state = {
+    step: 1, done: false, amount: 75000, purpose: 'working',
+    bizName: '', industry: '', structure: '', timeInBiz: '', zip: '',
+    revenue: '', credit: '', hasLoans: '',
+    bankConnected: false, files: [],
+    first: '', last: '', email: '', phone: '', password: '', consent: false,
+    errors: {}
+  };
+
+  componentDidMount() {
+    try {
+      var q = new URLSearchParams(window.location.search), patch = {};
+      var a = Number(q.get('amount')), p = q.get('purpose');
+      if (a >= 5000 && a <= 2000000) patch.amount = a;
+      if (p && this.purposeList().some(function (x) { return x.id === p; })) patch.purpose = p;
+      if (patch.amount || patch.purpose) { patch.step = 2; this.setState(patch); }
+    } catch (e) {}
+  }
+
+  purposeList() {
+    return [
+      { id: 'working', label: 'Working capital', icon: 'M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3M3 7.5V17a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H5.5A2.5 2.5 0 0 1 3 7.5ZM16 13.5h.5' },
+      { id: 'equipment', label: 'Equipment', icon: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z' },
+      { id: 'inventory', label: 'Inventory', icon: 'M21 8l-9-5-9 5v8l9 5 9-5V8ZM3 8l9 5 9-5M12 13v8' },
+      { id: 'expansion', label: 'Expansion', icon: 'M3 17l6-6 4 4 8-8M15 7h6v6' },
+      { id: 'payroll', label: 'Payroll', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
+      { id: 'other', label: 'Something else', icon: 'M5 12h.01M12 12h.01M19 12h.01' }
+    ];
+  }
+
+  check(s) {
+    var e = {};
+    if (s.step === 2) {
+      if (!s.bizName.trim()) e.bizName = 'Enter your legal business name.';
+      if (!s.industry) e.industry = 'Choose an industry.';
+      if (!s.structure) e.structure = 'Choose a business structure.';
+      if (!s.timeInBiz) e.timeInBiz = 'Choose how long you have been in business.';
+      if (!/^\d{5}$/.test(s.zip.trim())) e.zip = 'Enter a 5-digit ZIP code.';
+    } else if (s.step === 3) {
+      if (!s.revenue) e.revenue = 'Choose your average monthly revenue.';
+      if (!s.credit) e.credit = 'Choose a credit score range.';
+      if (!s.hasLoans) e.hasLoans = 'Choose yes or no.';
+    } else if (s.step === 4) {
+      if (!s.bankConnected && !s.files.length) e.bank = 'Connect your bank or upload statements, or skip this step for now.';
+    } else if (s.step === 5) {
+      if (!s.first.trim()) e.first = 'Enter your first name.';
+      if (!s.last.trim()) e.last = 'Enter your last name.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email.trim())) e.email = 'Enter a valid email address.';
+      if (s.phone.replace(/\D/g, '').length < 10) e.phone = 'Enter a 10-digit phone number.';
+      if (s.password.length < 8) e.password = 'Use at least 8 characters.';
+      if (!s.consent) e.consent = 'Please agree before submitting.';
+    }
+    return e;
+  }
+
+  toTop() {
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  remember(s, purposeLabel) {
+    try {
+      window.sessionStorage.setItem('capdeck_request', JSON.stringify({ amount: s.amount, purpose: purposeLabel, first: s.first.trim() }));
+    } catch (e) {}
+  }
+
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var accent = this.props.accent ?? '#0066FF';
+    var strict = this.props.requireFields ?? true;
+    var errors = s.errors || {};
+    var names = ['', 'Funding need', 'Your business', 'Revenue and credit', 'Bank information', 'Your account'];
+    var amountText = '$' + Number(s.amount).toLocaleString('en-US');
+
+    var list = this.purposeList();
+    var current = list.filter(function (p) { return p.id === s.purpose; })[0] || list[0];
+    var purposes = list.map(function (p) {
+      var on = p.id === current.id;
+      return {
+        label: p.label, icon: p.icon, on: on,
+        pick: function () { self.setState({ purpose: p.id }); },
+        bg: on ? accent : '#FFFFFF', fg: on ? '#FFFFFF' : '#0A0B0D', bd: on ? accent : '#8A93A3'
+      };
+    });
+
+    function setter(name, kind) {
+      return function (e) {
+        var patch = {};
+        patch[name] = kind === 'checked' ? !!e.target.checked : kind === 'number' ? Number(e.target.value) : e.target.value;
+        if (errors[name]) { patch.errors = Object.assign({}, errors); delete patch.errors[name]; }
+        self.setState(patch);
+      };
+    }
+    var fields = ['bizName', 'industry', 'structure', 'timeInBiz', 'zip', 'revenue', 'credit', 'first', 'last', 'email', 'phone', 'password'];
+    var v = { amount: s.amount, consent: !!s.consent }, on = { amount: setter('amount', 'number'), consent: setter('consent', 'checked') };
+    var err = { hasLoans: errors.hasLoans || '', bank: errors.bank || '', consent: errors.consent || '' }, bad = {};
+    fields.forEach(function (f) {
+      v[f] = s[f];
+      on[f] = setter(f, 'text');
+      err[f] = errors[f] || '';
+      bad[f] = !!errors[f];
+    });
+
+    function yesNo(value) {
+      var isOn = s.hasLoans === value;
+      return {
+        on: isOn,
+        pick: function () { var rest = Object.assign({}, errors); delete rest.hasLoans; self.setState({ hasLoans: value, errors: rest }); },
+        bg: isOn ? accent : '#FFFFFF', fg: isOn ? '#FFFFFF' : '#0A0B0D', bd: isOn ? accent : '#8A93A3'
+      };
+    }
+
+    function advance() {
+      var found = strict ? self.check(s) : {};
+      if (Object.keys(found).length) { self.setState({ errors: found }); return; }
+      if (s.step < 5) self.setState({ step: s.step + 1, errors: {} });
+      else { self.remember(s, current.label); self.setState({ done: true, errors: {} }); }
+      self.toTop();
+    }
+
+    var steps = ['Funding', 'Business', 'Revenue', 'Bank', 'Account'].map(function (label, i) {
+      var n = i + 1, done = n < s.step, now = n === s.step, lit = done || now;
+      return {
+        num: n, label: label, done: done, todo: !done,
+        current: now ? 'step' : null,
+        flex: n < 5 ? '1 1 0%' : '0 0 auto',
+        line: n < 5,
+        bg: lit ? accent : '#FFFFFF', fg: lit ? '#FFFFFF' : '#4A5261', bd: lit ? accent : '#8A93A3',
+        lineBg: done ? accent : '#D5DEEC',
+        weight: now ? 600 : 500,
+        labelFg: now ? '#0A0B0D' : '#4A5261'
+      };
+    });
+
+    var first = (s.first || '').trim();
+    return {
+      accent: accent,
+      steps: steps,
+      isForm: !s.done,
+      isDone: !!s.done,
+      is1: !s.done && s.step === 1,
+      is2: !s.done && s.step === 2,
+      is3: !s.done && s.step === 3,
+      is4: !s.done && s.step === 4,
+      is5: !s.done && s.step === 5,
+      stepNum: s.step,
+      stepName: names[s.step],
+      pct: s.step * 20,
+      pctCss: (s.step * 20) + '%',
+      canBack: s.step > 1,
+      canEdit: !s.done && s.step > 1,
+      nextLabel: s.step === 5 ? 'Submit and see my options' : 'Continue',
+      next: advance,
+      back: function () { self.setState({ step: Math.max(1, s.step - 1), errors: {} }); self.toTop(); },
+      editRequest: function () { self.setState({ step: 1, errors: {} }); self.toTop(); },
+      v: v, on: on, err: err, bad: bad,
+      amountText: amountText,
+      purposes: purposes,
+      purposeLabel: current.label,
+      loanYes: yesNo('yes'),
+      loanNo: yesNo('no'),
+      bankOff: !s.bankConnected,
+      bankOn: !!s.bankConnected,
+      connectBank: function () { self.setState({ bankConnected: true, errors: {} }); },
+      onFiles: function (e) {
+        var picked = [];
+        var fl = (e.target && e.target.files) || [];
+        for (var i = 0; i < fl.length; i++) picked.push({ name: fl[i].name });
+        self.setState({ files: picked, errors: {} });
+      },
+      files: s.files,
+      hasFiles: s.files.length > 0,
+      skipBank: function () { self.setState({ step: 5, errors: {} }); self.toTop(); },
+      doneTitle: first ? 'Application received, ' + first + '.' : 'Application received.'
+    };
+  }
+}
+mountPage(Component, {"accent": "#0066FF", "requireFields": true});
+</script>
+</body>
+</html>
